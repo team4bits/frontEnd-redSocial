@@ -6,6 +6,7 @@ import img4 from '../assets/leo-dibu-toro.jpg';
 
 const Post = () => {
   const images = [img1, img2, img3, img4];
+  const tags =["campeones del mundo","festejos","Argentina"]
   
   return (
     <Card className="w-100 w-md-75 w-lg-50 mx-auto my-5 bg-dark text-light" style={{ minHeight: '20rem', maxWidth: '60vw' }}>
@@ -13,6 +14,13 @@ const Post = () => {
         <div>
           <Card.Title className="text-light mb-1">Lionel Andrés Messi</Card.Title>
           <Card.Subtitle className="text-secondary">18-12-2022 00:00 </Card.Subtitle>
+        </div>
+        <div className='d-flex gap-1 flex-wrap justify-content-center'>
+          {tags.map((tag, index) => (
+            <Button key={index} variant="success" size="sm">
+              {tag}
+            </Button>
+          ))}
         </div>
         <div className='d-flex gap-2'>
           <Button variant="outline-warning" size="sm">Editar</Button>
