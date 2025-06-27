@@ -1,10 +1,13 @@
 import { Card, Button } from 'react-bootstrap';
-import messiImage from '../assets/messi-campeon.jpg';
+import img1 from '../assets/messi-campeon.jpg';
+import img2 from '../assets/dibu-festejo.jpg';
+import img3 from '../assets/dibu-colombia.jpg';
+import img4 from '../assets/leo-dibu-toro.jpg';
 
 const Post = () => {
   return (
     <Card className="w-50 mx-auto my-5 bg-dark text-light" style={{ minHeight: '20rem' }}>
-      <Card.Header className='d-flex justify-content-between align-items-center bg-dark text-light'>
+      <Card.Header className='d-flex justify-content-between align-items-center text-light'>
         <div>
           <Card.Title className="text-light">John Doe</Card.Title>
           <Card.Subtitle className="text-secondary">01-01-2020 00:00 </Card.Subtitle>
@@ -14,22 +17,23 @@ const Post = () => {
           <Button variant="outline-danger">Eliminar</Button>
         </div>
       </Card.Header>
-      <Card.Img
-        variant="bottom"
-        src={messiImage}
-        alt="Imagen/imagenes guardada/s"
-        className="d-block mx-auto"
-        style={{ height: '15rem', width: '300px', objectFit: 'cover' }}
-      />
-      <Card.Body className="bg-dark text-light">
-        <Card.Text className="text-light">
+      <div className="p-3 d-flex justify-content-center">
+        <Card.Img
+          variant="bottom"
+          src={img3}
+          alt="Imagen/imagenes guardada/s"
+          className="rounded w-100 h-auto"
+        />
+      </div>
+      <Card.Body className="text-light">
+        <Card.Text className="text-light text-justify">
           content content content content content content content content content content content
           content content content content content content content content content content content
           content content content content content content content content content content content
           content content content content content content content content content content content
         </Card.Text>
       </Card.Body>
-      <Card.Footer className='d-flex justify-content-center align-items-center gap-2 bg-dark text-light'>
+      <Card.Footer className='d-flex justify-content-center align-items-center gap-2 text-light'>
         <Button variant="outline-primary">Ver Comentarios</Button>
       </Card.Footer>
     </Card>
