@@ -23,5 +23,3 @@ dist-ssr
 *.sln
 *.sw?
 
-#json de prueba
-MOCK_DATA.json
