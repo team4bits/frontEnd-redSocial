@@ -1,17 +1,15 @@
-import React from 'react'
+import React from "react";
 //Importamos el componente del formulario de registro
-import FormularioDeRegistro from '../components/FormRegistro'
-import Footer from '../components/Footer'
-import { getFunctions } from '../components/functions'
-import logoImg from '../assets/ANTI-SOCIALNET.jpg'
-
+import FormularioDeRegistro from "../components/FormRegistro";
+import { getFunctions } from "../components/functions";
+import logoImg from "../assets/ANTI-SOCIALNET.jpg";
 
 // Traer el JSON de la API con la lista de usuarios registrados
 //Como prueba se utiliza un JSON local pero luego hay que reemplazar por la llamada a la API
 
 const usuarios = await getFunctions.getUsersNickNames();
 const Registro = () => {
-    /*
+  /*
       La vista del registro tiene El logo con una pequeña leyenda, y a su lado el formulario de registro.
     */
   return (
@@ -21,28 +19,33 @@ const Registro = () => {
           {/* Columna izquierda - Logo (solo en desktop) */}
           <div className="col-lg-6 d-none d-lg-flex align-items-center justify-content-center">
             <div className="text-center p-4">
-              <img 
-                src={logoImg} 
-                alt='Logo de la red social' 
+              <img
+                src={logoImg}
+                alt="Logo de la red social"
                 className="img-fluid mb-3 rounded"
-                style={{maxHeight: '300px', maxWidth: '100%'}}
+                style={{ maxHeight: "300px", maxWidth: "100%" }}
               />
               <h2 className="text-primary mb-2">ANTI-SOCIALNET</h2>
               <p className="text-muted">Tu red social favorita</p>
             </div>
           </div>
-          
+
           {/* Columna del formulario */}
           <div className="col-lg-6 col-12 d-flex align-items-center justify-content-center">
-            <div className="w-100 px-4 py-5 bg-dark rounded" style={{maxWidth: '500px'}}>
+            <div
+              className="w-100 px-4 py-5 bg-dark rounded"
+              style={{ maxWidth: "500px" }}
+            >
               {/* Texto alternativo solo en móvil y tablet */}
               <div className="d-lg-none text-center mb-4">
                 <h2 className="text-primary mb-2">ANTI-SOCIALNET</h2>
                 <p className="text-light">Tu red social favorita</p>
               </div>
-              
+
               <h1 className="text-center mb-3 h2">Registro</h1>
-              <p className="text-center mb-4 text-light">¡Únete a nuestra comunidad!</p>
+              <p className="text-center mb-4 text-light">
+                ¡Únete a nuestra comunidad!
+              </p>
               {/* Cargar el formulario de registro pasandole los usuarios registrados hasta el momento*/}
               <FormularioDeRegistro usuarios={usuarios} />
             </div>
@@ -50,7 +53,7 @@ const Registro = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Registro
+export default Registro;
