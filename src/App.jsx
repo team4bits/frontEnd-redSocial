@@ -4,7 +4,7 @@ import Inicio from "./pages/Inicio"
 import Login from "./pages/Login"
 import Registro from "./pages/Registro"
 import Footer from "./components/Footer"
-import Perfil from "./components/Perfil"
+import Perfil from "./pages/Perfil"
 
 function App() {
 
