@@ -1,8 +1,13 @@
 import React from 'react'
+//Importamos el componente del formulario de registro
+import FormularioDeRegistro from '../components/FormRegistro'
 
 function Registro() {
   return (
-    <div>Registro</div>
+    <div>
+      <h1>Registro</h1>
+      <FormularioDeRegistro />
+    </div>
   )
 }
 

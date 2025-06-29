@@ -17,7 +17,6 @@ function App() {
           <Route path="/registro" element={<Registro />} />
           <Route path="/*" element={<Navigate to="/" />} />
         </Routes>
-
         <Footer />
       </Router>
     </>
