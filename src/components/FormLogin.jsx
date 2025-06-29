@@ -1,5 +1,6 @@
 import Form from "react-bootstrap/Form";
 import { Button } from "react-bootstrap";
+import { NickNameInput, PasswordInput } from './FormLogin-components'
 
 /*
     El formulario de Inicio de sesión permite a los usuarios ingresar:
@@ -12,21 +13,12 @@ import { Button } from "react-bootstrap";
 const FormLogin = () => {
     return (
         <Form>
-            <Form.Group className="mb-3" controlId="formBasicNickName">
-                <Form.Label>Nombre de usuario</Form.Label>
-                <Form.Control type="text" placeholder="Ingresa tu nombre de usuario" />
-            </Form.Group>
-
-            <Form.Group className="mb-3" controlId="formBasicPassword">
-                <Form.Label>Contraseña</Form.Label>
-                <Form.Control type="password" placeholder="Contraseña default: 123456" />
-            </Form.Group>
-
+            <NickNameInput />
+            <PasswordInput />
             <Button variant="primary" type="submit" onClick={(e) => e.preventDefault()}>
                 Iniciar sesión
             </Button>
         </Form>
     )
 }
-
 export default FormLogin;
