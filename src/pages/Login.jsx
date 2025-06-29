@@ -1,8 +1,14 @@
 import React from 'react'
+import FormLogin from '../components/FormLogin'
+import {getUsersNickNames} from '../components/functions/get'
+
+const usuarios = await getUsersNickNames();
+
 
 function Login() {
+  console.log(usuarios);
   return (
-    <div>Login</div>
+    <FormLogin usuarios={usuarios}/>
   )
 }
 

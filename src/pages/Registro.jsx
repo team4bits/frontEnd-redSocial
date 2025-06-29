@@ -1,17 +1,12 @@
 import React from 'react'
 //Importamos el componente del formulario de registro
 import FormularioDeRegistro from '../components/FormRegistro'
+import { getUsersNickNames } from '../components/functions/get'
 
 // Traer el JSON de la API con la lista de usuarios registrados
 //Como prueba se utiliza un JSON local pero luego hay que reemplazar por la llamada a la API
-const cargarUsuarios = async () => {
-  const response = await fetch('../MOCK_DATA.json')
-  const data = await response.json()
-  const usuarios = data.map(user => user.nickName)
-  return usuarios
-}
-const usuarios = await cargarUsuarios();
-console.log(usuarios);
+
+const usuarios = await getUsersNickNames();
 const Registro = () => {
   return (
     <div>
