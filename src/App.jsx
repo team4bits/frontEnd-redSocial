@@ -19,7 +19,6 @@ function App() {
           <Route path="/perfil" element={<Perfil />} />
           <Route path="/*" element={<Navigate to="/" />} />
         </Routes>
-
         <Footer />
       </Router>
     </>
