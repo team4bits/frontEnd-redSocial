@@ -5,9 +5,6 @@ function Inicio() {
     <div className="bg-secondary p-2">
         <Post />
         <Post />
-        <Post />
-        <Post />
-        <Post />
     </div>
   )
 }
