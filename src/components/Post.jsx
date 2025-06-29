@@ -61,7 +61,7 @@ const Post = () => {
         </Card.Text>
       </Card.Body>
 
-      <Card.Footer className='d-flex justify-content-center align-items-center gap-2 text-light'>
+      <Card.Footer className='d-flex justify-content-center align-items-center gap-2 text-light p-3'>
         <Button variant="outline-primary">Ver Comentarios</Button>
       </Card.Footer>
     </Card>
