@@ -6,8 +6,8 @@ import img4 from '../assets/leo-dibu-toro.jpg';
 
 const Post = () => {
   const images = [img1, img2, img3, img4];
-  const tags =["campeones del mundo","festejos","Argentina"]
-  
+  const tags = ["campeones del mundo", "festejos", "Argentina"];
+
   return (
     <Card className="w-100 w-md-75 w-lg-50 mx-auto my-5 bg-dark text-light" style={{ minHeight: '20rem', maxWidth: '60vw' }}>
       <Card.Header className='d-flex justify-content-between align-items-center text-light gap-2'>
@@ -27,20 +27,29 @@ const Post = () => {
           <Button variant="outline-danger" size="sm">Eliminar</Button>
         </div>
       </Card.Header>
-      
       <div className="p-2">
-        <Carousel indicators={true} controls={true} interval={null} className="w-100">
-          {images.map((image, index) => (
-            <Carousel.Item key={index}>
-              <img
-                className="d-block w-100 rounded"
-                src={image}
-                alt={`Imagen ${index + 1}`}
-                style={{ height: '35rem', objectFit: 'contain' }}
-              />
-            </Carousel.Item>
-          ))}
-        </Carousel>
+        {images.length > 1 &&
+          <Carousel indicators={true} controls={true} interval={null} className="w-100">
+            {images.map((image, index) => (
+              <Carousel.Item key={index}>
+                <img
+                  className="d-block w-100 rounded"
+                  src={image}
+                  alt={`Imagen ${index + 1}`}
+                  style={{ height: '35rem', objectFit: 'contain' }}
+                />
+              </Carousel.Item>
+            ))}
+          </Carousel>
+        }
+        {images.length === 1 &&
+          <img
+            className="d-block w-100 rounded"
+            src={images[0]}
+            alt={`Imagen 1`}
+            style={{ height: '35rem', objectFit: 'contain' }}
+          />
+        }
       </div>
 
       <Card.Body className="text-light">
@@ -51,8 +60,8 @@ const Post = () => {
           content content content content content content content content content content content
         </Card.Text>
       </Card.Body>
-      
-      <Card.Footer className='d-flex justify-content-center align-items-center gap-2 text-light'>
+
+      <Card.Footer className='d-flex justify-content-center align-items-center gap-2 text-light p-3'>
         <Button variant="outline-primary">Ver Comentarios</Button>
       </Card.Footer>
     </Card>
