@@ -5,7 +5,7 @@ const ProfileTabs = ({ activeTab, onTabChange }) => {
     <div className="d-flex justify-content-center mb-4">
       <Button 
         variant={activeTab === 'posts' ? 'primary' : 'outline-primary'} 
-        onClick={() => onTabChange('posts')}
+        onClick={() => onTabChange('posts')}  //cuando se hace click en el boton, se cambia la pestaña a posts
         className="mx-2"
       >
         Posts

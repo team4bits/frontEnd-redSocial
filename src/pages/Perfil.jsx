@@ -1,41 +1,40 @@
 import { useState } from 'react';
 import { Container } from 'react-bootstrap';
-import ProfileHeader from '../components/ProfileHeader';
-import ProfileTabs from '../components/ProfileTabs';
-import ProfileContent from '../components/ProfileContent';
+import ProfileHeader from '../components/profile/ProfileHeader';
+import ProfileTabs from '../components/profile/ProfileTabs';
+import ProfileContent from '../components/profile/ProfileContent';
+import FormPost from '../components/FormPost';
 
 const Perfil = () => {
   const [activeTab, setActiveTab] = useState('posts');
 
-  // Datos hardcodeados (ejemplo)
+  // Datos hardcodeados
   const user = {
     nickName: "leomessi",
     posts: [
       {
         id: 1,
-        fechaDelPost: "2023-12-18T12:00:00Z",
-        archivos: [],
-        comentarios: [
+        fecha: "2023-12-18T12:00:00Z",
+        archives: [],
+        comments: [
           {
             id: 101,
-            contenido: "¡Increíble partido!",
+            content: "¡Increíble partido!",
             fecha: "2023-12-18T12:30:00Z"
           }
         ]
       },
       {
         id: 2,
-        fechaDelPost: "2023-12-20T10:00:00Z",
-        archivos: [
-          { id: 201, url: "https://ejemplo.com/foto.jpg" }
-        ],
-        comentarios: []
+        fecha: "2023-12-20T10:00:00Z",
+        archives: [],
+        comments: []
       }
     ],
-    comentarios: [
+    comments: [
       {
         id: 301,
-        contenido: "Gracias por el apoyo",
+        contents: "Gracias por el apoyo",
         fecha: "2023-12-19T15:00:00Z"
       }
     ]
@@ -50,7 +49,6 @@ const Perfil = () => {
           activeTab={activeTab} 
           onTabChange={setActiveTab} 
         />
-        
         <ProfileContent 
           activeTab={activeTab} 
           user={user} 
