@@ -8,6 +8,7 @@ import { createContext, useState, useEffect } from 'react'
 
 // Creamos el contexto de usuario que será compartido globalmente
 export const UserContext = createContext(null)
+import Perfil from "./pages/Perfil"
 
 function App() {
   // Estado global para el usuario logueado.
