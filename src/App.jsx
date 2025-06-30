@@ -2,13 +2,13 @@ import { Navigate, Route, Routes, BrowserRouter as Router } from "react-router-d
 import Header from "./components/Header"
 import Inicio from "./pages/Inicio"
 import Login from "./pages/Login"
+import Perfil from "./pages/Perfil"
 import Registro from "./pages/Registro"
 import Footer from "./components/Footer"
 import { createContext, useState, useEffect } from 'react'
 
 // Creamos el contexto de usuario que será compartido globalmente
 export const UserContext = createContext(null)
-import Perfil from "./pages/Perfil"
 
 function App() {
   // Estado global para el usuario logueado.
@@ -44,6 +44,8 @@ function App() {
               <Route path="/" element={<Inicio />} />           {/* Página de inicio */}
               <Route path="/login" element={<Login />} />       {/* Página de login */}
               <Route path="/registro" element={<Registro />} /> {/* Página de registro */}
+              <Route path="/perfil" element={<Perfil />} />     {/* Página de perfil del usuario */}
+              {/* Redirige cualquier ruta no definida a la página de inicio */}
               <Route path="/*" element={<Navigate to="/" />} /> {/* Redirige todo lo no definido a / */}
             </Routes>
           </main>
