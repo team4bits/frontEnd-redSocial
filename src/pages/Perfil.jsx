@@ -8,6 +8,7 @@ const Perfil = () => {
   const [activeTab, setActiveTab] = useState('posts');
 
   // Datos hardcodeados
+  // Al estar hardcodeados los componentes, solo toma el lenght. Tengo que arreglarlo
   const user = {
     nickName: "leomessi",
     posts: [

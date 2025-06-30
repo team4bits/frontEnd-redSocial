@@ -4,7 +4,7 @@ import img2 from '../assets/dibu-festejo.jpg';
 import img3 from '../assets/dibu-colombia.jpg';
 import img4 from '../assets/leo-dibu-toro.jpg';
 
-const Post = () => {
+const Post = ({user,post}) => {
   const images = [img1, img2, img3, img4];
   const tags = ["campeones del mundo", "festejos", "Argentina"];
 
@@ -12,8 +12,8 @@ const Post = () => {
     <Card className="w-100 w-md-75 w-lg-50 mx-auto my-5 bg-dark text-light" style={{ minHeight: '20rem', maxWidth: '60vw' }}>
       <Card.Header className='d-flex justify-content-between align-items-center text-light gap-2'>
         <div>
-          <Card.Title className="text-light mb-1">Lionel Andrés Messi</Card.Title>
-          <Card.Subtitle className="text-secondary">18-12-2022 00:00 </Card.Subtitle>
+          <Card.Title className="text-light mb-1">@{user.nickName}</Card.Title>
+          <Card.Subtitle className="text-secondary">{post.fecha} </Card.Subtitle>
         </div>
         <div className='d-flex gap-1 flex-wrap justify-content-center'>
           {tags.map((tag, index) => (
@@ -54,10 +54,7 @@ const Post = () => {
 
       <Card.Body className="text-light">
         <Card.Text className="text-light text-justify">
-          content content content content content content content content content content content
-          content content content content content content content content content content content
-          content content content content content content content content content content content
-          content content content content content content content content content content content
+          {post.content}
         </Card.Text>
       </Card.Body>
 
