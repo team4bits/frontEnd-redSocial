@@ -1,7 +1,6 @@
-import { getUsersNickNames, getAllUsers } from './get'
+import { getUsersNickNames } from './get'
 const getFunctions = {
-    getUsersNickNames,
-    getAllUsers
+    getUsersNickNames
 }
 
 export {
