@@ -1,34 +1,30 @@
-import Form from 'react-bootstrap/Form';
-import { useState } from 'react';
+import Form from "react-bootstrap/Form";
 
-
-const NickNameInput = (props) => {
-  // props.usuarios contiene la lista de usuarios registrados hasta el momento
-  const { usuarios } = props;
-  const [nickName, setNickName] = useState("");
-  const setNickname = (e) => {
-    // Aquí se puede agregar la lógica para validar el nickname
-    // Por ejemplo, verificar si ya existe en la lista de usuarios
-    const nicknameValue = e.target.value;
-    setNickName(nicknameValue);
-    if (usuarios.includes(nicknameValue)) {
-      console.warn("El nickname ya existe");
-    } else {
-      console.log("Nickname válido");
+const NickNameInput = ({ nickname, setNickname, isInvalid, errorMessage }) => {
+  const mensajeDeError = (errorMessage) => {
+    if (errorMessage == 'El nickname ya existe'){
+      return 'El nickname ya existe';
     }
-  };
-
-  //Cuando el usuario salga del input, se puede validar si el nickname ya existe
-  return (<>
-    <Form.Group className="mb-3" controlId="formBasicNickname">
-      <Form.Label>Nickname</Form.Label>
-      <Form.Control type="text" placeholder="Ingresa un nickname" onChange={setNickname} />
-      <p>
-        {usuarios.includes(nickName) ? (
-          <span style={{ color: 'red' }}>El nickname ya existe</span>
-        ) : (<><span style={{ color: 'green' }}>Nickname disponible</span></>)
-        }</p>
-    </Form.Group>
+    if (errorMessage == 'El nickname debe tener al menos 2 caracteres'){
+      return 'El nickname debe tener al menos 2 caracteres';
+    }
+  }
+  return (
+    <>
+      <Form.Group className="mb-3" controlId="formBasicNickname">
+        <Form.Label>Nickname</Form.Label>
+        <Form.Control
+          type="text"
+          value={nickname}
+          placeholder="Ingresa un nickname"
+          onChange={(e) => setNickname(e.target.value)}
+          isInvalid={isInvalid}
+          required
+        />
+        <Form.Control.Feedback type="invalid">
+          {mensajeDeError(errorMessage)}
+        </Form.Control.Feedback>
+      </Form.Group>
     </>
   );
 };
