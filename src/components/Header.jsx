@@ -37,9 +37,6 @@ const Header = () => {
                 <NavDropdown.Item as={Link} to="/editar-perfil">
                   Editar Perfil
                 </NavDropdown.Item>
-                <NavDropdown.Item as={Link} to="/actividad">
-                  Mi Actividad
-                </NavDropdown.Item>
                 <NavDropdown.Divider />
                 <NavDropdown.Item 
                 as={Link} 

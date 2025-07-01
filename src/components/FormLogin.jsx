@@ -45,6 +45,7 @@ const FormLogin = ({usuarios}) => {
         try{
             const usuarioCompleto = await getFunctions.getUserByObjectId(usuarioEncontrado._id);
             setUser(usuarioCompleto);
+            usuarios = await getFunctions.getAllUsers(); // Actualiza la lista de usuarios
             navigate('/');
         } catch (error) {
             console.error('Error al obtener el usuario completo:', error);
