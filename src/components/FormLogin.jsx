@@ -2,7 +2,7 @@ import Form from "react-bootstrap/Form";
 import { Button } from "react-bootstrap";
 import { NickNameInput, PasswordInput } from './FormLogin-components'
 import { useState, useContext } from "react";
-import { UserContext } from "../App"; // Traemos el contexto del usuario desde App.jsx
+import { UserContext } from '../context/UserContext';
 import { useNavigate } from "react-router-dom";
 /*
     El formulario de Inicio de sesión permite a los usuarios ingresar:

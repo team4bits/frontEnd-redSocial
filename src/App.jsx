@@ -5,10 +5,9 @@ import Login from "./pages/Login"
 import Perfil from "./pages/Perfil"
 import Registro from "./pages/Registro"
 import Footer from "./components/Footer"
-import { createContext, useState, useEffect } from 'react'
-
+import { useState, useEffect } from 'react'
+import { UserContext } from "./context/UserContext"
 // Creamos el contexto de usuario que será compartido globalmente
-export const UserContext = createContext(null)
 
 function App() {
   // Estado global para el usuario logueado.
