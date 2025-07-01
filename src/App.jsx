@@ -5,6 +5,7 @@ import Login from "./pages/Login"
 import Perfil from "./pages/Perfil"
 import Registro from "./pages/Registro"
 import Footer from "./components/Footer"
+import PerfilEdit from './pages/PerfilEdit'
 import { useState, useEffect } from 'react'
 import { UserContext } from "./context/UserContext"
 // Creamos el contexto de usuario que será compartido globalmente
@@ -44,6 +45,7 @@ function App() {
               <Route path="/login" element={<Login />} />       {/* Página de login */}
               <Route path="/registro" element={<Registro />} /> {/* Página de registro */}
               <Route path="/perfil" element={<Perfil />} />     {/* Página de perfil del usuario */}
+              <Route path="/editar-perfil" element={<PerfilEdit />} /> {/* Página para editar perfil */}
               {/* Redirige cualquier ruta no definida a la página de inicio */}
               <Route path="/*" element={<Navigate to="/" />} /> {/* Redirige todo lo no definido a / */}
             </Routes>
