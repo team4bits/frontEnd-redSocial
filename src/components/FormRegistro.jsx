@@ -2,7 +2,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { NickNameInput, EmailInput, CheckBox } from "./FormRegistro-components";
 import { useEffect, useState } from "react";
-import { registrarUsuario } from "./functions/post/index";
+import { postFunctions } from "./functions";
 import { useNavigate } from "react-router-dom";
 /*
     Formulario de registro para un nuevo usuario.
@@ -85,7 +85,7 @@ function FormularioDeRegistro({usuarios, emails}) {
           }
           if (!nickInvalido && !emailInvalido) {
             //Registrar al usuario
-            registrarUsuario({
+            postFunctions.registrarUsuario({
               nickName: nickname,
               email: email,
             });
