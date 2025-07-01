@@ -7,7 +7,6 @@ const Header = () => {
   // Este componente representa la cabecera de la aplicación
   // Si hay un usuario logueado, desabilita el enlace de Login y de Registrarse
   const {user, setUser} = useContext(UserContext);
-  console.log(user)
   // Función para cerrar sesión
   const cerrarSesion = () => {
     //La lógica para salir del context
