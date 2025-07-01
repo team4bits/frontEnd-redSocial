@@ -8,7 +8,7 @@ const ProfileContent = ({ activeTab, user }) => {
     <>
       {activeTab === 'posts' && (
         <>
-          <FormPost />
+          <FormPost user={user} />
           {user.posts.length > 0 ? (
             user.posts.map((post) => (
               <Post 
@@ -26,10 +26,9 @@ const ProfileContent = ({ activeTab, user }) => {
       {activeTab === 'comments' && (
         user.comments.length > 0 ? (
           user.comments.map((comment) => (
-            <Comment 
-              key={comment.id} 
-              content={comment.content}
-              fecha={comment.fecha}
+            <Comment user={user}
+              comment={comment}
+              key={comment.id}
             />
           ))
         ) : (

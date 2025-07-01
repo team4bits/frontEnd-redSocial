@@ -54,6 +54,7 @@ const Perfil = () => {
         <ProfileContent 
           activeTab={activeTab} 
           user={user} 
+          comment={user.comments[0]}
         />
       </div>
     </Container>

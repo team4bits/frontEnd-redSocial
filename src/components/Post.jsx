@@ -5,6 +5,7 @@ import img3 from '../assets/dibu-colombia.jpg';
 import img4 from '../assets/leo-dibu-toro.jpg';
 
 const Post = ({user,post}) => {
+  // Estos datos todavia estan hardcodeados
   const images = [img1, img2, img3, img4];
   const tags = ["campeones del mundo", "festejos", "Argentina"];
 
