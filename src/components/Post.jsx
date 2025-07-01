@@ -1,13 +1,6 @@
 import { Card, Button, Carousel } from 'react-bootstrap';
-import img1 from '../assets/messi-campeon.jpg';
-import img2 from '../assets/dibu-festejo.jpg';
-import img3 from '../assets/dibu-colombia.jpg';
-import img4 from '../assets/leo-dibu-toro.jpg';
 
 const Post = ({user,post}) => {
-  // Estos datos todavia estan hardcodeados
-  const images = [img1, img2, img3, img4];
-  const tags = ["campeones del mundo", "festejos", "Argentina"];
 
   return (
     <Card className="w-100 w-md-75 w-lg-50 mx-auto my-5 bg-dark text-light" style={{ minHeight: '20rem', maxWidth: '60vw' }}>
@@ -17,7 +10,7 @@ const Post = ({user,post}) => {
           <Card.Subtitle className="text-secondary">{post.fecha} </Card.Subtitle>
         </div>
         <div className='d-flex gap-1 flex-wrap justify-content-center'>
-          {tags.map((tag, index) => (
+          {post.tags.map((tag, index) => (
             <Button key={index} variant="success" size="sm">
               {tag}
             </Button>
@@ -29,9 +22,9 @@ const Post = ({user,post}) => {
         </div>
       </Card.Header>
       <div className="p-2">
-        {images.length > 1 &&
+        {post.images.length > 1 &&
           <Carousel indicators={true} controls={true} interval={null} className="w-100">
-            {images.map((image, index) => (
+            {post.images.map((image, index) => (
               <Carousel.Item key={index}>
                 <img
                   className="d-block w-100 rounded"
@@ -43,10 +36,10 @@ const Post = ({user,post}) => {
             ))}
           </Carousel>
         }
-        {images.length === 1 &&
+        {post.images.length === 1 &&
           <img
             className="d-block w-100 rounded"
-            src={images[0]}
+            src={post.images[0]}
             alt={`Imagen 1`}
             style={{ height: '35rem', objectFit: 'contain' }}
           />
