@@ -2,6 +2,10 @@ import Post from '../components/Post';
 import Comment from '../components/Comment';
 import FormPost from '../components/FormPost';
 import FormComment from '../components/FormComment';
+import img1 from '../assets/messi-campeon.jpg';
+import img2 from '../assets/dibu-festejo.jpg';
+import img3 from '../assets/dibu-colombia.jpg';
+import img4 from '../assets/leo-dibu-toro.jpg';
 
 const user = {
   nickName: "leomessi",
@@ -10,7 +14,8 @@ const user = {
       id: 1,
       fecha: "2023-12-18T12:00:00Z",
       content: "¡Increíble partido!",
-      archives: [],
+      images: [img1, img2],
+      tags : ["campeones del mundo"],
       comments: [
         {
           id: 101,
@@ -23,7 +28,8 @@ const user = {
       id: 2,
       fecha: "2023-12-20T10:00:00Z",
       content: "Otro post genial",
-      archives: [],
+      images: [img3, img4],
+      tags: ["festejos", "Argentina"],
       comments: []
     }
   ],
