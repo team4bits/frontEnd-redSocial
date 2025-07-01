@@ -31,7 +31,7 @@ const Header = () => {
               <Nav.Link as={Link} to="/login" disabled={!!user}>
                 Iniciar Sesión
               </Nav.Link>
-              <NavDropdown title={user ? user.nickName : "Usuario"} id="collapsible-nav-dropdown">
+              <NavDropdown title={user ? user.nickName : "Usuario"} disabled={!user} id="collapsible-nav-dropdown">
                 <NavDropdown.Item as={Link} to="/perfil">
                   Mi Cuenta
                 </NavDropdown.Item>
@@ -44,7 +44,7 @@ const Header = () => {
                 <NavDropdown.Divider />
                 <NavDropdown.Item 
                 as={Link} 
-                to="/logout"
+                to="/inicio"
                 onClick={cerrarSesion}>
                   Cerrar Sesión
                 </NavDropdown.Item>
