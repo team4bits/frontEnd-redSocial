@@ -1,6 +1,6 @@
 import Form from "react-bootstrap/Form";
 
-const NickNameInput = ({ nickname, setNickname, isInvalid, errorMessage }) => {
+const NickNameInput = ({ nickname, setNickname, isInvalid, errorMessage , isValid}) => {
   const mensajeDeError = (errorMessage) => {
     if (errorMessage == 'El nickname ya existe'){
       return 'El nickname ya existe';
@@ -19,11 +19,13 @@ const NickNameInput = ({ nickname, setNickname, isInvalid, errorMessage }) => {
           placeholder="Ingresa un nickname"
           onChange={(e) => setNickname(e.target.value)}
           isInvalid={isInvalid}
+          isValid={isValid}
           required
         />
         <Form.Control.Feedback type="invalid">
           {mensajeDeError(errorMessage)}
         </Form.Control.Feedback>
+        <Form.Control.Feedback type="valid"/>
       </Form.Group>
     </>
   );

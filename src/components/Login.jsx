@@ -3,6 +3,7 @@ import { useState, useContext } from 'react'
 import { Form, Button, Card, Alert } from 'react-bootstrap' // Componentes UI de Bootstrap
 import { useNavigate } from 'react-router-dom' // Para redirigir al usuario después del login
 import { UserContext } from '../App' // Traemos el contexto del usuario desde App.jsx
+import { getFunctions } from './functions'
 
 const Login = () => {
   // Estados para manejar los campos del formulario y errores
@@ -28,9 +29,7 @@ const Login = () => {
 
     try {
       // Solicitamos la lista completa de usuarios al backend
-      const res = await fetch('http://localhost:3000/users') // modificar la ruta o hacer un .env?
-      const users = await res.json()
-
+      const users = await getFunctions.getUsersNickNames()
       // Buscamos un usuario cuyo nickName coincida con el ingresado
       const user = users.find(u => u.nickName === nickName)
 
@@ -43,8 +42,9 @@ const Login = () => {
         // Redirigimos a la página de inicio
         navigate('/')
       }
-    } catch (err) {
+    } catch (error) {
       // Si ocurre un error al hacer la petición (fallo de red o servidor)
+      console.error('Error al obtener usuarios:', error)
       setError('Error al conectar con el servidor')
     }
   }

@@ -1,8 +1,13 @@
-import { getUsersNickNames } from './get'
+import { getUsersNickNames, getUsersEmails } from './get'
+import {registrarUsuario} from './post'
 const getFunctions = {
-    getUsersNickNames
+    getUsersNickNames,
+    getUsersEmails
 }
-
+const postFunctions = {
+    registrarUsuario
+}
 export {
-    getFunctions
+    getFunctions,
+    postFunctions
 }

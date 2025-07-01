@@ -1,9 +1,9 @@
-import {getUsersEmails} from '../get'
+import {getFunctions} from '../'
 
 //Se fija que el mail que se recibe no esté ya registrado
 const validarEmailDisponible = async (email) => {
   //Se obtiene la lista de emails registrados
-  const emailsRegistrados = await getUsersEmails();
+  const emailsRegistrados = await getFunctions.getUsersEmails();
   //Se comprueba si el email ya está registrado
   if(!emailsRegistrados.includes(email)) {
     return true;
