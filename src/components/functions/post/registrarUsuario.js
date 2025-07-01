@@ -11,10 +11,11 @@ const registrarUsuario = async (bodyUsuario) => {
     // {
     //   "nickName": "string", Un string de al menos 2 caracteres
     //   "email": "string" Un email valido
-    if(validarMail(bodyUsuario.email) && validarNickName(bodyUsuario.nickName)) {
+    console.log(`El email es valido = ${ await validarMail(bodyUsuario.email)}`);
+    console.log(`El nickName es valido = ${ validarNickName(bodyUsuario.nickName)}`);
+    if(await validarMail(bodyUsuario.email) &&  validarNickName(bodyUsuario.nickName)) {
         console.log("Usuario válido, procediendo a registrar...");
         try {
-
         let respuesta = await fetch (`${URL_API}:${URL_API_PORT}/users`, {
             method: "POST",
             headers: {

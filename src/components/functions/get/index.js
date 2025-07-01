@@ -1,3 +1,6 @@
 import getUsersNickNames from './getUsersNickNames';
-
-export { getUsersNickNames };
+import getUsersEmails from './getUsersEmails';
+export { 
+    getUsersNickNames,
+    getUsersEmails
+};
