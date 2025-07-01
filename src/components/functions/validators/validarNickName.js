@@ -1,10 +1,8 @@
-import { getFunctions } from "../";
-
-
+import { getFunctions } from "../index";
 
 const largoMinimo = 2;
-const usuarios = await getFunctions.getUsersNickNames();
-const validarNickName = (nickname) => {
+const validarNickName = async (nickname) => {
+  const usuarios = await getFunctions.getUsersNickNames();
   if (nickname.length < largoMinimo || usuarios.includes(nickname)) {
     return false;
   }

@@ -1,11 +1,21 @@
 import Form from 'react-bootstrap/Form';
 
-const PasswordInput = () => {
+const PasswordInput = ({password, setPassword, isInvalid}) => {
     return (
-        <Form.Group className="mb-3" controlId="formBasicPassword">
-            <Form.Label>Contraseña</Form.Label>
-            <Form.Control type="password" placeholder="Contraseña default: 123456" />
-        </Form.Group>
+        <>
+            <Form.Group className="mb-3" controlId="formBasicPassword">
+                <Form.Label>Contraseña</Form.Label>
+                <Form.Control 
+                type="password" 
+                isInvalid={isInvalid}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                />
+            </Form.Group>
+            <Form.Control.Feedback type="invalid">
+            </Form.Control.Feedback>
+        </>
     );
 };
 
