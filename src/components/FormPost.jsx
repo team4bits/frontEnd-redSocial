@@ -1,10 +1,16 @@
 import { Card, Button, Form } from 'react-bootstrap';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-const FormPost = () => {
+const FormPost = ({user}) => {
     const [content, setContent] = useState("");
     const [imagenes, setImagenes] = useState([]);
     const [tags, setTags] = useState([]);
+    const [currentTime, setCurrentTime] = useState(new Date());
+
+    useEffect(() => {
+        const timer = setInterval(() => setCurrentTime(new Date()), 60000); // 60000 = 1 minuto
+        return () => clearInterval(timer);
+    }, []);
 
     const handleImageChange = (e) => {
         const files = Array.from(e.target.files);
@@ -16,8 +22,13 @@ const FormPost = () => {
             <Card className="w-100 w-md-75 w-lg-50 mx-auto my-5 bg-dark text-light" style={{ minHeight: '10rem', maxWidth: '60vw' }}>
                 <Card.Header className='d-flex justify-content-between align-items-center text-light gap-2'>
                     <div>
-                        <Card.Title className="text-light mb-1">Lionel Andrés Messi</Card.Title>
-                        <Card.Subtitle className="text-secondary">18-12-2022 00:00 </Card.Subtitle>
+                        <Card.Title className="text-light mb-1">@{user.nickName}</Card.Title>
+                        <Card.Subtitle className="text-secondary">
+                            {currentTime.toLocaleString(undefined, { 
+                                dateStyle: 'short',
+                                timeStyle: 'short'
+                            })}
+                        </Card.Subtitle>
                     </div>
                     <Button variant="outline-success" size="sm">
                         Agregar Tag
