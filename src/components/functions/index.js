@@ -2,6 +2,7 @@ import { getUsersNickNames, getUsersEmails, getUserByObjectId } from './get'
 import { getAllUsers } from './get/getAllUsers'
 import {registrarUsuario} from './post'
 import {validarMail, validarNickName} from './validators'
+import {putFunctions} from './put'
 const getFunctions = {
     getUsersNickNames,
     getUsersEmails,
@@ -18,5 +19,6 @@ const validators = {
 export {
     getFunctions,
     postFunctions,
-    validators
+    validators,
+    putFunctions
 }
