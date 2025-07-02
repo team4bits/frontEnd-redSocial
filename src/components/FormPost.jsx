@@ -8,7 +8,7 @@ const FormPost = ({user}) => {
     const [currentTime, setCurrentTime] = useState(new Date());
 
     useEffect(() => {
-        const timer = setInterval(() => setCurrentTime(new Date()), 60000); 
+        const timer = setInterval(() => setCurrentTime(new Date()), 60000); // 60000 = 1 minuto
         return () => clearInterval(timer);
     }, []);
 
