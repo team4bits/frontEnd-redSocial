@@ -27,10 +27,11 @@ const registrarUsuario = async (bodyUsuario) => {
         }
         const data = await respuesta.json();
         console.log("Usuario registrado:", data);
+        return data;
     } catch (error) {
         console.error("Error al registrar usuario:", error.message);
     }
-    return bodyUsuario;
+    
     } else {
         console.error("Datos invalidos, no se puede registrar.");
         return null;
