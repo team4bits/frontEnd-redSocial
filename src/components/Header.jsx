@@ -7,11 +7,11 @@ const Header = () => {
   // Este componente representa la cabecera de la aplicación
   // Si hay un usuario logueado, desabilita el enlace de Login y de Registrarse
   const {user, setUser} = useContext(UserContext);
-  console.log(user)
   // Función para cerrar sesión
   const cerrarSesion = () => {
     //La lógica para salir del context
     setUser(null);
+
   }
 
   return (
@@ -37,9 +37,6 @@ const Header = () => {
                 </NavDropdown.Item>
                 <NavDropdown.Item as={Link} to="/editar-perfil">
                   Editar Perfil
-                </NavDropdown.Item>
-                <NavDropdown.Item as={Link} to="/actividad">
-                  Mi Actividad
                 </NavDropdown.Item>
                 <NavDropdown.Divider />
                 <NavDropdown.Item 

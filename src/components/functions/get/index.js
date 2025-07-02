@@ -4,10 +4,12 @@ import { getAUser } from './getAUser';
 import { getPostsFromUser } from './getPostsFromUser';
 import { getCommentsFromUser } from './getCommentsFromUser';
 
+import getUserByObjectId from './getUserByObjectId';
 export { 
     getUsersNickNames,
     getUsersEmails,
     getAUser,
     getPostsFromUser,
-    getCommentsFromUser
+    getCommentsFromUser,
+    getUserByObjectId
 };
