@@ -46,6 +46,7 @@ const FormLogin = () => {
             return;
         }
         try{
+            console.log('Usuario encontrado:', usuarioEncontrado);
             const usuarioCompleto = await getFunctions.getUserByObjectId(usuarioEncontrado._id);
             setUser(usuarioCompleto);
             await actualizarUsuarios(); // Actualiza la lista de usuarios
