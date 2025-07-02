@@ -11,6 +11,5 @@ export {
     getAUser,
     getPostsFromUser,
     getCommentsFromUser,
-    getUsersEmails,
     getUserByObjectId
 };

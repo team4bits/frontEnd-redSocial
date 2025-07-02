@@ -1,5 +1,5 @@
 import { getUsersNickNames, getUsersEmails, getAUser, getPostsFromUser, getCommentsFromUser } from './get'
-import { getUsersNickNames, getUsersEmails, getUserByObjectId } from './get'
+import { getUserByObjectId } from './get'
 import { getAllUsers } from './get/getAllUsers'
 import {registrarUsuario} from './post'
 import {validarMail, validarNickName} from './validators'
@@ -11,7 +11,6 @@ const getFunctions = {
     getAUser,
     getPostsFromUser,
     getCommentsFromUser,
-    getUsersEmails,
     getAllUsers,
     getUserByObjectId
 }
