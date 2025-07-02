@@ -3,6 +3,7 @@ import { getAllUsers } from './get/getAllUsers'
 import {registrarUsuario} from './post'
 import {validarMail, validarNickName} from './validators'
 import {putFunctions} from './put'
+import {deleteUser} from './delete'
 const getFunctions = {
     getUsersNickNames,
     getUsersEmails,
@@ -16,9 +17,13 @@ const validators = {
     validarMail,
     validarNickName
 }
+const deleteFunctions = {
+    deleteUser
+}
 export {
     getFunctions,
     postFunctions,
     validators,
-    putFunctions
+    putFunctions,
+    deleteFunctions
 }
