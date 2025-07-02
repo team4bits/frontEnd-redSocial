@@ -1,14 +1,10 @@
 import React from "react";
 //Importamos el componente del formulario de registro
 import FormularioDeRegistro from "../components/FormRegistro";
-import { getFunctions } from "../components/functions";
 import logoImg from "../assets/ANTI-SOCIALNET.jpg";
 
 // Traer el JSON de la API con la lista de usuarios registrados
 //Como prueba se utiliza un JSON local pero luego hay que reemplazar por la llamada a la API
-
-const usuarios = await getFunctions.getUsersNickNames();
-const emails = await getFunctions.getUsersEmails();
 const Registro = () => {
   /*
       La vista del registro tiene El logo con una pequeña leyenda, y a su lado el formulario de registro.
@@ -48,7 +44,7 @@ const Registro = () => {
                 ¡Únete a nuestra comunidad!
               </p>
               {/* Cargar el formulario de registro pasandole los usuarios registrados hasta el momento*/}
-              <FormularioDeRegistro usuarios={usuarios} emails={emails}/>
+              <FormularioDeRegistro />
             </div>
           </div>
         </div>
