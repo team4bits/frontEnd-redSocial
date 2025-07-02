@@ -1,3 +1,4 @@
+import { getUsersNickNames, getUsersEmails, getAUser, getPostsFromUser, getCommentsFromUser } from './get'
 import { getUsersNickNames, getUsersEmails, getUserByObjectId } from './get'
 import { getAllUsers } from './get/getAllUsers'
 import {registrarUsuario} from './post'
@@ -6,6 +7,10 @@ import {putFunctions} from './put'
 import {deleteUser} from './delete'
 const getFunctions = {
     getUsersNickNames,
+    getUsersEmails,
+    getAUser,
+    getPostsFromUser,
+    getCommentsFromUser,
     getUsersEmails,
     getAllUsers,
     getUserByObjectId
