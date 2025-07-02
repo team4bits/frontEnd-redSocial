@@ -2,6 +2,9 @@ import { Card, Button, Carousel } from 'react-bootstrap';
 
 const Post = ({user,post}) => {
 
+  if (!post) return null;
+  const imagenes = post.imagenes || [];
+
   return (
     <Card className="w-100 w-md-75 w-lg-50 mx-auto my-5 bg-dark text-light" style={{ minHeight: '20rem', maxWidth: '60vw' }}>
       <Card.Header className='d-flex justify-content-between align-items-center text-light gap-2'>
@@ -22,7 +25,7 @@ const Post = ({user,post}) => {
         </div>
       </Card.Header>
       <div className="p-2">
-        {post.imagenes.length > 1 &&
+        {imagenes.length > 1 &&
           <Carousel indicators={true} controls={true} interval={null} className="w-100">
             {post.imagenes.map((image, index) => (
               <Carousel.Item key={index}>
@@ -36,7 +39,7 @@ const Post = ({user,post}) => {
             ))}
           </Carousel>
         }
-        {post.imagenes.length === 1 &&
+        {imagenes.length === 1 &&
           <img
             className="d-block w-100 rounded"
             src={post.imagenes[0]}
