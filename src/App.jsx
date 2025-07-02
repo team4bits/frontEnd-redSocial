@@ -55,7 +55,7 @@ function App() {
                 {/* Página de login */}
                 <Route path="/registro" element={<Registro />} />{" "}
                 {/* Página de registro */}
-                <Route path="/perfil" element={<Perfil />} />{" "}
+                <Route path="/users/:userId" element={<Perfil />} />{" "}
                 {/* Página de perfil del usuario */}
                 <Route path="/editar-perfil" element={<PerfilEdit />} />{" "}
                 {/* Página para editar perfil */}

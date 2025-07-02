@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
 const ProfileContent = ({ activeTab, user }) => {
   const [posts, setPosts] = useState([]);
   const [comments, setComments] = useState([]);
-
+  
   useEffect(() => {
     const fetchPosts = async () => {
       try {
@@ -31,6 +31,7 @@ const ProfileContent = ({ activeTab, user }) => {
     fetchPosts();
     fetchComments();
   }, [user._id]);
+
   if (!user) return <div>Cargando...</div>;
 
   return (
