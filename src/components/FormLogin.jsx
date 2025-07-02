@@ -2,7 +2,7 @@ import Form from "react-bootstrap/Form";
 import { Button } from "react-bootstrap";
 import { NickNameInput, PasswordInput } from './FormLogin-components'
 import { useState, useContext } from "react";
-import { UserContext } from "../App"; // Traemos el contexto del usuario desde App.jsx
+import { UserContext } from '../context/UserContext';
 import { useNavigate } from "react-router-dom";
 /*
     El formulario de Inicio de sesión permite a los usuarios ingresar:
@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom";
     Se modifica el useConext con los valores del usuario.
 */
 const FormLogin = ({usuarios}) => {
+    const nickNamesRegistrados = usuarios.map(usuario => usuario.nickName)
     const navigate = useNavigate(); // Hook para redirigir al usuario
     const [nickName, setNickName] = useState('');
     const [password, setPassword] = useState('123456'); // Contraseña default
@@ -33,7 +34,7 @@ const FormLogin = ({usuarios}) => {
             return;
         }
         //Se valida que el nickName exista en la lista de usuarios
-        if(usuarios.includes(nickName)){
+        if(nickNamesRegistrados.includes(nickName)){
             setLoginValido(true);
         }
         else {
@@ -43,7 +44,7 @@ const FormLogin = ({usuarios}) => {
         }
         //Si el login es válido, se guarda el usuario en el contexto
         if(loginValido){
-            const usuario = { nickName, password }; // Creamos un objeto usuario
+            const usuario = usuarios.find(usuario => usuario.nickName === nickName); // Creamos un objeto usuario
             setUser(usuario); // Guardamos el usuario en el contexto
             console.log('Usuario logueado:', usuario);
             navigate('/'); // Redirigir a la página de inicio

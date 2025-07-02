@@ -1,9 +1,9 @@
 import React from "react";
 import FormLogin from "../components/FormLogin";
-import { getFunctions } from "../components/functions";
+import { getAllUsers } from "../components/functions/get/getAllUsers";
 import logoImg from "../assets/ANTI-SOCIALNET.jpg";
 
-const usuarios = await getFunctions.getUsersNickNames();
+const usuarios = await getAllUsers();
 
 function Login() {
   return (

@@ -1,7 +1,19 @@
 import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { useContext } from 'react';
+import { UserContext } from '../context/UserContext';
 
 const Header = () => {
+  // Este componente representa la cabecera de la aplicación
+  // Si hay un usuario logueado, desabilita el enlace de Login y de Registrarse
+  const {user, setUser} = useContext(UserContext);
+  console.log(user)
+  // Función para cerrar sesión
+  const cerrarSesion = () => {
+    //La lógica para salir del context
+    setUser(null);
+  }
+
   return (
     <header>
       <Navbar collapseOnSelect expand="lg" bg="dark" data-bs-theme="dark">
@@ -13,13 +25,13 @@ const Header = () => {
               <Nav.Link as={Link} to="/">Inicio</Nav.Link>
             </Nav>
             <Nav>
-              <Nav.Link as={Link} to="/registro">
+              <Nav.Link as={Link} to="/registro" disabled={!!user}>
                 Registrarse
               </Nav.Link>
-              <Nav.Link as={Link} to="/login">
+              <Nav.Link as={Link} to="/login" disabled={!!user}>
                 Iniciar Sesión
               </Nav.Link>
-              <NavDropdown title="Nick Name" id="collapsible-nav-dropdown">
+              <NavDropdown title={user ? user.nickName : "Usuario"} disabled={!user} id="collapsible-nav-dropdown">
                 <NavDropdown.Item as={Link} to="/perfil">
                   Mi Cuenta
                 </NavDropdown.Item>
@@ -30,7 +42,10 @@ const Header = () => {
                   Mi Actividad
                 </NavDropdown.Item>
                 <NavDropdown.Divider />
-                <NavDropdown.Item as={Link} to="/logout">
+                <NavDropdown.Item 
+                as={Link} 
+                to="/inicio"
+                onClick={cerrarSesion}>
                   Cerrar Sesión
                 </NavDropdown.Item>
               </NavDropdown>
