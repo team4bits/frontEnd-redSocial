@@ -3,6 +3,7 @@ import { Button } from "react-bootstrap";
 import { NickNameInput, PasswordInput } from './FormLogin-components'
 import { useState, useContext } from "react";
 import { UserContext } from '../context/UserContext';
+import { UsuariosContext } from "../context/UsuariosContext";
 import { useNavigate } from "react-router-dom";
 import { getFunctions } from "./functions";
 /*
@@ -13,7 +14,7 @@ import { getFunctions } from "./functions";
     se redirige a la página de inicio.
     Se modifica el useConext con los valores del usuario.
 */
-const FormLogin = ({usuarios}) => {
+const FormLogin = () => {
     const navigate = useNavigate(); // Hook para redirigir al usuario
     const [nickName, setNickName] = useState('');
     const [password, setPassword] = useState('123456'); // Contraseña default
@@ -22,6 +23,8 @@ const FormLogin = ({usuarios}) => {
 
     //Accedemos a la función setUser para guardar el usuario logueado
     const { setUser } = useContext(UserContext);
+    //Accedemos a la lista de usuarios del contexto
+    const {usuarios, actualizarUsuarios} = useContext(UsuariosContext);
 
     //Función al ejecutar el envio del formulario
     const handleLogin = async (e) => {
@@ -43,9 +46,10 @@ const FormLogin = ({usuarios}) => {
             return;
         }
         try{
+            console.log('Usuario encontrado:', usuarioEncontrado);
             const usuarioCompleto = await getFunctions.getUserByObjectId(usuarioEncontrado._id);
             setUser(usuarioCompleto);
-            usuarios = await getFunctions.getAllUsers(); // Actualiza la lista de usuarios
+            await actualizarUsuarios(); // Actualiza la lista de usuarios
             navigate('/');
         } catch (error) {
             console.error('Error al obtener el usuario completo:', error);

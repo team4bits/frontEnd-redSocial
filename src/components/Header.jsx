@@ -11,6 +11,7 @@ const Header = () => {
   const cerrarSesion = () => {
     //La lógica para salir del context
     setUser(null);
+
   }
 
   return (

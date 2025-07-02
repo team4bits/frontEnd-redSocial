@@ -1,18 +1,22 @@
 import { UserContext } from "../context/UserContext";
+import { UsuariosContext } from "../context/UsuariosContext";
 import { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
-import { putFunctions, validators, getFunctions } from "../components/functions";
-const usuariosExistentes = await getFunctions.getAllUsers();
+
+import { putFunctions, validators, deleteFunctions } from "../components/functions";
 
 export default function PerfilEdit() {
-  const { user } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
+  const { usuarios, actualizarUsuarios } = useContext(UsuariosContext);
   const [nickName, setNickName] = useState(user.nickName);
   const [email, setEmail] = useState(user.email);
+  const navigate = useNavigate();
   // Validar nickName y email en tiempo real
   //Obtener la lista de usuarios existentes al momento
-  const nickNamesExistentes = usuariosExistentes.map((usuario) => usuario.nickName);
-  const emailsExistentes = usuariosExistentes.map((usuario) => usuario.email);
+  const nickNamesExistentes = usuarios.map((usuario) => usuario.nickName);
+  const emailsExistentes = usuarios.map((usuario) => usuario.email);
   const isvalidNickControl = (nickName.length >= 2 && !nickNamesExistentes.includes(nickName)) || nickName === user.nickName;
   const isvalidEmailControl = (validators.validarMail(email) && !emailsExistentes.includes(email)) || email === user.email;
 
@@ -32,6 +36,16 @@ export default function PerfilEdit() {
       console.log("Datos válidos, enviando a modificarUsuario");
         try {
         const response = await putFunctions.modificarUsuario(id, data);
+        //Actualizar la lista de usuarios en el contexto
+        await actualizarUsuarios();
+        //Actualizar el usuario en el contexto
+        setUser((prevUser) => ({
+          ...prevUser,
+          nickName: data.nickName,
+          email: data.email,
+        }));
+        //Redirigir al perfil
+        navigate("/perfil");
         console.log(response);
         } catch (error) {
         console.error("Error al modificar el usuario:", error);
@@ -39,6 +53,21 @@ export default function PerfilEdit() {
     } else {
       console.error("Datos inválidos");
       alert("Por favor, revise los datos ingresados.");
+    }
+  };
+  const eliminarCuenta = async (e) => {
+    e.preventDefault();
+    const confirmacion = window.confirm("¿Estás seguro de que quieres eliminar tu cuenta? Esta acción no se puede deshacer.");
+    if (confirmacion) {
+        //Si se confira se procede a la eliminación
+        //Se saca el usuario del contexto
+        setUser(null)
+        //Se redirige a la página de inicio
+        navigate("/");        //Se elimina el usuario de la base de datos
+        await deleteFunctions.deleteUser(user._id);//Se elimina el usuario
+        //Se actualiza la lista de usuarios en el contexto
+        await actualizarUsuarios();
+        
     }
   };
 
@@ -76,6 +105,9 @@ export default function PerfilEdit() {
         <Form.Control.Feedback type="invalid"/>
         <Button variant="primary" type="submit" onClick={modificarUsuario}>
           Guardar Cambios
+        </Button>
+        <Button variant="danger" type="button" onClick={eliminarCuenta}>
+          Eliminar Cuenta
         </Button>
       </Form>
     </>

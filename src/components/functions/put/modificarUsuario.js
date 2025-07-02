@@ -12,6 +12,7 @@ export const modificarUsuario = async (id, data) => {
         if (!response.ok) {
             throw new Error('Error al modificar el usuario');
         }
+        console.log('Usuario modificado correctamente:', response);
         return await response.json();
     } catch (error) {
         console.error('Error en la función modificarUsuario:', error);
