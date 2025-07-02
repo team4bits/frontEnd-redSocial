@@ -3,6 +3,7 @@ import getUsersEmails from './getUsersEmails';
 import { getAUser } from './getAUser';
 import { getPostsFromUser } from './getPostsFromUser';
 import { getCommentsFromUser } from './getCommentsFromUser';
+import { getAllPosts } from './getAllPosts';
 
 import getUserByObjectId from './getUserByObjectId';
 export { 
@@ -11,5 +12,6 @@ export {
     getAUser,
     getPostsFromUser,
     getCommentsFromUser,
-    getUserByObjectId
+    getUserByObjectId,
+    getAllPosts
 };
