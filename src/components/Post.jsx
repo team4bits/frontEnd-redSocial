@@ -1,19 +1,21 @@
 import { Card, Button, Carousel } from 'react-bootstrap';
 
-const Post = ({user,post}) => {
-
+const Post = ({user, post}) => {
   if (!post) return null;
+  
+  // Validaciones para imágenes
   const imagenes = post.imagenes || [];
+  const tieneImagenes = imagenes && imagenes.length > 0;
 
   return (
     <Card className="w-100 w-md-75 w-lg-50 mx-auto my-5 bg-dark text-light" style={{ minHeight: '20rem', maxWidth: '60vw' }}>
       <Card.Header className='d-flex justify-content-between align-items-center text-light gap-2'>
         <div>
           <Card.Title className="text-light mb-1">@{user.nickName}</Card.Title>
-          <Card.Subtitle className="text-secondary">{post.fecha} </Card.Subtitle>
+          <Card.Subtitle className="text-secondary">{post.fecha}</Card.Subtitle>
         </div>
         <div className='d-flex gap-1 flex-wrap justify-content-center'>
-          {post.tags.map((tag, index) => (
+          {post.tags && post.tags.length > 0 && post.tags.map((tag, index) => (
             <Button key={index} variant="success" size="sm">
               {tag}
             </Button>
@@ -24,30 +26,51 @@ const Post = ({user,post}) => {
           <Button variant="outline-danger" size="sm">Eliminar</Button>
         </div>
       </Card.Header>
-      <div className="p-2">
-        {imagenes.length > 1 &&
-          <Carousel indicators={true} controls={true} interval={null} className="w-100">
-            {post.imagenes.map((image, index) => (
-              <Carousel.Item key={index}>
-                <img
-                  className="d-block w-100 rounded"
-                  src={image}
-                  alt={`Imagen ${index + 1}`}
-                  style={{ height: '35rem', objectFit: 'contain' }}
-                />
-              </Carousel.Item>
-            ))}
-          </Carousel>
-        }
-        {imagenes.length === 1 &&
-          <img
-            className="d-block w-100 rounded"
-            src={post.imagenes[0]}
-            alt={`Imagen 1`}
-            style={{ height: '35rem', objectFit: 'contain' }}
-          />
-        }
-      </div>
+
+      {/* Sección de imágenes */}
+      {tieneImagenes && (
+        <div className="p-2">
+          {imagenes.length > 1 ? (
+            <Carousel indicators={true} controls={true} interval={null} className="w-100">
+              {imagenes.map((imageObj, index) => {
+                if (!imageObj || !imageObj.imagen) {
+                  return null;
+                }
+                
+                return (
+                  <Carousel.Item key={imageObj._id || index}>
+                    <img
+                      className="d-block w-100 rounded"
+                      src={`http://localhost:3001${imageObj.imagen}`}
+                      alt={`Imagen ${index + 1}`}
+                      style={{ height: '35rem', objectFit: 'contain' }}
+                      onError={(e) => {
+                        e.target.src = 'https://via.placeholder.com/400x300?text=Error+al+cargar';
+                      }}
+                    />
+                  </Carousel.Item>
+                );
+              })}
+            </Carousel>
+          ) : (
+            imagenes[0] && imagenes[0].imagen ? (
+              <img
+                className="d-block w-100 rounded"
+                src={`http://localhost:3001${imagenes[0].imagen}`}
+                alt="Imagen del post"
+                style={{ height: '35rem', objectFit: 'contain' }}
+                onError={(e) => {
+                  e.target.src = 'https://via.placeholder.com/400x300?text=Error+al+cargar';
+                }}
+              />
+            ) : (
+              <div className="p-3 text-center text-secondary">
+                <small>Imagen no disponible</small>
+              </div>
+            )
+          )}
+        </div>
+      )}
 
       <Card.Body className="text-light">
         <Card.Text className="text-light text-justify">
@@ -62,4 +85,4 @@ const Post = ({user,post}) => {
   )
 }
 
-export default Post
+export default Post;
