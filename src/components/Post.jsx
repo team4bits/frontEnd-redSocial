@@ -1,6 +1,6 @@
 import { Card, Button, Carousel } from 'react-bootstrap';
 
-const Post = ({user, post}) => {
+const Post = ({user, post, tags}) => {
   if (!post) return null;
   
   // Validaciones para imágenes
@@ -15,9 +15,9 @@ const Post = ({user, post}) => {
           <Card.Subtitle className="text-secondary">{post.fecha}</Card.Subtitle>
         </div>
         <div className='d-flex gap-1 flex-wrap justify-content-center'>
-          {post.tags && post.tags.length > 0 && post.tags.map((tag, index) => (
+          {tags && tags.length > 0 && tags.map((tag, index) => (
             <Button key={index} variant="success" size="sm">
-              {tag}
+              {tag.nameTag}
             </Button>
           ))}
         </div>
