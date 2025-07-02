@@ -10,7 +10,7 @@ const Header = () => {
   // Función para cerrar sesión
   const cerrarSesion = () => {
     //La lógica para salir del context
-    setUser(null);
+    setUser(undefined);
 
   }
 
@@ -32,7 +32,7 @@ const Header = () => {
                 Iniciar Sesión
               </Nav.Link>
               <NavDropdown title={user ? user.nickName : "Usuario"} disabled={!user} id="collapsible-nav-dropdown">
-                <NavDropdown.Item as={Link} to="/perfil">
+                <NavDropdown.Item as={Link} to={`/users/${user?._id}`}>
                   Mi Cuenta
                 </NavDropdown.Item>
                 <NavDropdown.Item as={Link} to="/editar-perfil">
@@ -41,7 +41,7 @@ const Header = () => {
                 <NavDropdown.Divider />
                 <NavDropdown.Item 
                 as={Link} 
-                to="/inicio"
+                to="/login"
                 onClick={cerrarSesion}>
                   Cerrar Sesión
                 </NavDropdown.Item>
