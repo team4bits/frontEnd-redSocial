@@ -42,6 +42,7 @@ const HomeContent = () => {
                         key={post._id}
                         user={post.userId}
                         post={post}
+                        tags={post.tags || []}
                     />
                 ))
             ) : (
