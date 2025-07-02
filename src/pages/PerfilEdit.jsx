@@ -67,49 +67,91 @@ export default function PerfilEdit() {
         await deleteFunctions.deleteUser(user._id);//Se elimina el usuario
         //Se actualiza la lista de usuarios en el contexto
         await actualizarUsuarios();
-        
     }
   };
-
   return (
-    <>
-      <Form className="d-flex flex-column min-vh-100 bg-secondary text-light ">
-        <Form.Group
-          className="mb-3"
-          controlId="formBasicEmail"
-        >
-          <Form.Label>Nombre de Usuario</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Ingrese su nombre de usuario"
-            value={nickName}
-            onChange={(e) => setNickName(e.target.value)}
-            isValid={isvalidNickControl}
-            isInvalid={!isvalidNickControl && nickName.length > 0}
-          />
-            <Form.Control.Feedback type="valid"/>
-            <Form.Control.Feedback type="invalid"/>
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label>Email</Form.Label>
-          <Form.Control
-            type="email"
-            placeholder="Ingrese su email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            isValid={isvalidEmailControl}
-            isInvalid={!isvalidEmailControl && email.length > 0}
-          />
-        </Form.Group>
-        <Form.Control.Feedback type="valid"/>
-        <Form.Control.Feedback type="invalid"/>
-        <Button variant="primary" type="submit" onClick={modificarUsuario}>
-          Guardar Cambios
-        </Button>
-        <Button variant="danger" type="button" onClick={eliminarCuenta}>
-          Eliminar Cuenta
-        </Button>
-      </Form>
-    </>
+    <div className="d-flex flex-column min-vh-100 bg-secondary text-light">
+      <div className="container-fluid flex-grow-1">
+        <div className="row h-100 min-vh-100">
+          <div className="col-12 d-flex align-items-center justify-content-center">
+            <div
+              className="w-100 px-4 py-5 bg-dark rounded"
+              style={{ maxWidth: "500px" }}
+            >
+              {/* Encabezado del formulario */}
+              <div className="text-center mb-4">
+                <h2 className="text-primary mb-2">ANTI-SOCIALNET</h2>
+                <p className="text-light">Tu red social favorita</p>
+              </div>
+
+              <h1 className="text-center mb-3 h2">Editar Perfil</h1>
+              <p className="text-center mb-4 text-light">
+                Actualiza tu información personal
+              </p>
+
+              {/* Formulario */}
+              <Form>
+                <Form.Group className="mb-3" controlId="formBasicNickname">
+                  <Form.Label className="text-light">Nombre de Usuario</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Ingrese su nombre de usuario"
+                    value={nickName}
+                    onChange={(e) => setNickName(e.target.value)}
+                    isValid={isvalidNickControl}
+                    isInvalid={!isvalidNickControl && nickName.length > 0}
+                  />
+                  <Form.Control.Feedback type="valid">
+                    ¡Nombre de usuario válido!
+                  </Form.Control.Feedback>
+                  <Form.Control.Feedback type="invalid">
+                    El nombre debe tener al menos 2 caracteres y no estar en uso
+                  </Form.Control.Feedback>
+                </Form.Group>
+
+                <Form.Group className="mb-4" controlId="formBasicEmail">
+                  <Form.Label className="text-light">Email</Form.Label>
+                  <Form.Control
+                    type="email"
+                    placeholder="Ingrese su email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    isValid={isvalidEmailControl}
+                    isInvalid={!isvalidEmailControl && email.length > 0}
+                  />
+                  <Form.Control.Feedback type="valid">
+                    ¡Email válido!
+                  </Form.Control.Feedback>
+                  <Form.Control.Feedback type="invalid">
+                    Por favor ingrese un email válido y que no esté en uso
+                  </Form.Control.Feedback>
+                </Form.Group>
+
+                {/* Botones */}
+                <div className="d-grid gap-2">
+                  <Button 
+                    variant="primary" 
+                    size="lg"
+                    onClick={modificarUsuario}
+                    disabled={!isvalidNickControl || !isvalidEmailControl}
+                  >
+                    Guardar Cambios
+                  </Button>
+                  
+                  <Button 
+                    variant="outline-danger" 
+                    size="lg"
+                    onClick={eliminarCuenta}
+                    className="mt-3"
+                  >
+                    Eliminar Cuenta
+                  </Button>
+                </div>
+              </Form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
