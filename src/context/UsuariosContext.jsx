@@ -27,9 +27,7 @@ export const UsuariosProvider = ({ children }) => {
     //Reemplazar todos los usuarios
     const actualizarUsuarios = async () => {
         try {
-            console.log("Actualizando usuarios...");
             const lista = await getAllUsers();
-            console.log(lista.map(usuario => usuario.nickName));
             setUsuarios(lista);
         } catch (error) {
             console.error("Error al actualizar los usuarios:", error);
