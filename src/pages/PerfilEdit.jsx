@@ -45,6 +45,7 @@ export default function PerfilEdit() {
           email: data.email,
         }));
         //Redirigir al perfil
+        alert("Usuario modificado correctamente");
         navigate("/perfil");
         console.log(response);
         } catch (error) {
