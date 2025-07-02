@@ -1,9 +1,12 @@
-import { getUsersNickNames, getUsersEmails } from './get'
+import { getUsersNickNames, getUsersEmails, getAUser, getPostsFromUser, getCommentsFromUser } from './get'
 import {registrarUsuario} from './post'
 import {validarMail, validarNickName} from './validators'
 const getFunctions = {
     getUsersNickNames,
-    getUsersEmails
+    getUsersEmails,
+    getAUser,
+    getPostsFromUser,
+    getCommentsFromUser
 }
 const postFunctions = {
     registrarUsuario
