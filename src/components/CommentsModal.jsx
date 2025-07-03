@@ -8,7 +8,6 @@ const CommentsModal = ({ show, onHide, post, user, currentUser }) => {
   const [commentsWithUsers, setCommentsWithUsers] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Mover fetchUsersForComments fuera del useEffect como useCallback
   const fetchUsersForComments = useCallback(async () => {
     if (post?.comments && post.comments.length > 0) {
       try {
@@ -49,27 +48,17 @@ const CommentsModal = ({ show, onHide, post, user, currentUser }) => {
     fetchUsersForComments();
   }, [fetchUsersForComments]);
 
-  // useEffect separado para el event listener
+  // useEffect para el event listener
   useEffect(() => {
-    const handler = async () => {
-      console.log("🔔 Nuevo comentario detectado para post:", post?._id);
-
-      // 1. Disparar evento para que componentes padre recarguen
-      window.dispatchEvent(new CustomEvent("recargar-post", {
-        detail: { postId: post._id }
-      }));
-
-      // 2. Dar un momento para que el backend procese y recargar
-      setTimeout(async () => {
-        console.log("🔄 Recargando comentarios desde API...");
-        await fetchUsersForComments();
-        console.log("✅ Comentarios actualizados");
-      }, 1000);
+    const handler = () => {
+      console.log("🔄 Recargando página...");
+      window.location.reload();
+    
     };
 
     window.addEventListener("nuevo-comentario-creado", handler);
     return () => window.removeEventListener("nuevo-comentario-creado", handler);
-  }, [fetchUsersForComments, post?._id]);
+  }, []);
 
   return (
     <Modal show={show} onHide={onHide} size="lg" backdrop="static">
