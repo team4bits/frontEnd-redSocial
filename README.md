@@ -1,11 +1,11 @@
 # Frontend - Red Social
 
-Una aplicación web de red social desarrollada con React y Vite como proyecto académico para las materias **Construcción de Interfaces** y **Estrategias De Persistencia** de la Universidad Nacional de Hurlingham (UNAHUR).
+Una aplicación web de red social desarrollada con React y Vite como proyecto académico para las materias **Construcción de Interfaces** y **Estrategia De Persistencia** de la Universidad Nacional de Hurlingham (UNAHUR).
 
 ## Contexto Académico
 
 - **Universidad**: Universidad Nacional de Hurlingham (UNAHUR)
-- **Materia**: Estrategia de Persistencia
+- **Materia**: Construcción de Interfaces y Estrategia de Persistencia
 - **Año**: 2025
 - **Proyecto**: Sistema completo de red social con frontend y backend
 
