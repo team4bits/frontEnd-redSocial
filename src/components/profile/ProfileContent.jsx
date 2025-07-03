@@ -61,9 +61,11 @@ const ProfileContent = ({ activeTab }) => {
 
     window.addEventListener("recargar-profile-content", handleReload);
     window.addEventListener("nuevo-post-eliminado", handleReload);
+    window.addEventListener("nuevo-post-creado", handleReload);
     return () => {
       window.removeEventListener("recargar-profile-content", handleReload)
       window.removeEventListener("nuevo-post-eliminado", handleReload);
+      window.removeEventListener("nuevo-post-creado", handleReload);
     };
   }, [user._id]);
 
