@@ -9,5 +9,8 @@ export const apiEndpoints = {
   posts: '/posts',
   postsByUser: '/posts/user',
   commentsByUser: '/comments/user',
-  comments: '/comments'
+  comments: '/comments',
+  archives: '/archives',
+  tags: '/tags'
+
 };

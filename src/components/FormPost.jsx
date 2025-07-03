@@ -1,11 +1,14 @@
 import { Card, Button, Form } from 'react-bootstrap';
 import { useState, useEffect } from 'react';
+import { API_URL, apiEndpoints } from '../config/api';
+import FormTag from './FormTag';
 
 const FormPost = ({ user, onPostCreado }) => {
     const [content, setContent] = useState("");
     const [imagenes, setImagenes] = useState([]);
-    const [tags, setTags] = useState([]); // si lo usás más adelante
+    const [tags, setTags] = useState([]);
     const [currentTime, setCurrentTime] = useState(new Date());
+    const [showTagModal, setShowTagModal] = useState(false);
 
     useEffect(() => {
         const timer = setInterval(() => setCurrentTime(new Date()), 60000);
@@ -15,6 +18,14 @@ const FormPost = ({ user, onPostCreado }) => {
     const handleImageChange = (e) => {
         const files = Array.from(e.target.files);
         setImagenes(files);
+    };
+
+    const agregarTag = () => {
+        setShowTagModal(true);
+    };
+
+    const cerrarTagModal = () => {
+        setShowTagModal(false);
     };
 
     const handleSubmit = async (e) => {
@@ -40,7 +51,7 @@ const FormPost = ({ user, onPostCreado }) => {
                 // No enviar 'tags' al crear el post
             };
             console.log("Payload del post:", nuevoPost);
-            const responsePost = await fetch("http://localhost:3001/posts", {
+            const responsePost = await fetch(`${API_URL}${apiEndpoints.posts}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -60,7 +71,7 @@ const FormPost = ({ user, onPostCreado }) => {
                     formData.append("imagenes", img); // campo correcto: 'imagenes'
                 });
 
-                const responseArchivos = await fetch("http://localhost:3001/archives", {
+                const responseArchivos = await fetch(`${API_URL}${apiEndpoints.archives}`, {
                     method: "POST",
                     body: formData
                 });
@@ -82,7 +93,7 @@ const FormPost = ({ user, onPostCreado }) => {
         }
     };
 
-    return (
+    return (<>
         <Form onSubmit={handleSubmit}>
             <Card className="w-100 w-md-75 w-lg-50 mx-auto my-5 bg-dark text-light" style={{ minHeight: '10rem', maxWidth: '60vw' }}>
                 <Card.Header className='d-flex justify-content-between align-items-center text-light gap-2'>
@@ -95,7 +106,7 @@ const FormPost = ({ user, onPostCreado }) => {
                             })}
                         </Card.Subtitle>
                     </div>
-                    <Button variant="outline-success" size="sm">
+                    <Button variant="outline-success" size="sm" onClick={agregarTag}>
                         Agregar Tag
                     </Button>
                 </Card.Header>
@@ -126,75 +137,14 @@ const FormPost = ({ user, onPostCreado }) => {
                 </Card.Footer>
             </Card>
         </Form>
+
+        {/* Modal de Tags */}
+        <FormTag
+            show={showTagModal}
+            onHide={cerrarTagModal}
+        />
+    </>
     );
 };
 
 export default FormPost;
-
-
-
-/*import { Card, Button, Form } from 'react-bootstrap';
-import { useState, useEffect } from 'react';
-
-const FormPost = ({user}) => {
-    const [content, setContent] = useState("");
-    const [imagenes, setImagenes] = useState([]);
-    const [tags, setTags] = useState([]);
-    const [currentTime, setCurrentTime] = useState(new Date());
-
-    useEffect(() => {
-        const timer = setInterval(() => setCurrentTime(new Date()), 60000); // 60000 = 1 minuto
-        return () => clearInterval(timer);
-    }, []);
-
-    const handleImageChange = (e) => {
-        const files = Array.from(e.target.files);
-        setImagenes(files);
-    };
-
-    return (
-        <Form>
-            <Card className="w-100 w-md-75 w-lg-50 mx-auto my-5 bg-dark text-light" style={{ minHeight: '10rem', maxWidth: '60vw' }}>
-                <Card.Header className='d-flex justify-content-between align-items-center text-light gap-2'>
-                    <div>
-                        <Card.Title className="text-light mb-1">@{user.nickName}</Card.Title>
-                        <Card.Subtitle className="text-secondary">
-                            {currentTime.toLocaleString(undefined, { 
-                                dateStyle: 'short',
-                                timeStyle: 'short'
-                            })}
-                        </Card.Subtitle>
-                    </div>
-                    <Button variant="outline-success" size="sm">
-                        Agregar Tag
-                    </Button>
-                </Card.Header>
-                <Card.Body className=" text-light">
-                    <Form.Group controlId="formFile" className="mb-3" >
-                        <Form.Control
-                            className="bg-dark text-light text-justify"
-                            type="file"
-                            accept="image/*"
-                            multiple
-                            onChange={handleImageChange}
-                        />
-                    </Form.Group>
-                    <Form.Control
-                        className="bg-dark text-light border-light text-justify"
-                        type="text"
-                        placeholder="¿Qué estás pensando publicar?"
-                        value={content}
-                        onChange={(e) => setContent(e.target.value)}
-                        data-bs-theme="dark"
-                    />
-                </Card.Body>
-
-                <Card.Footer className='d-flex justify-content-center align-items-center gap-2 text-light p-3'>
-                    <Button variant="primary">Publicar</Button>
-                </Card.Footer>
-            </Card>
-        </Form>
-    )
-}
-
-export default FormPost*/

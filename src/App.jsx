@@ -74,23 +74,4 @@ function App() {
   );
 }
 
-/*function App() {
-
-  return (
-    <>
-      <Router>
-        <Header />
-        <Routes>
-          <Route path="/" element={<Inicio />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/registro" element={<Registro />} />
-          <Route path="/perfil" element={<Perfil />} />
-          <Route path="/*" element={<Navigate to="/" />} />
-        </Routes>
-        <Footer />
-      </Router>
-    </>
-  )
-}*/
-
 export default App;
