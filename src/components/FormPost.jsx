@@ -87,7 +87,7 @@ const FormPost = ({ user, onPostCreado }) => {
     return (<>
         <Form onSubmit={handleSubmit}>
             <Card className="w-100 w-md-75 w-lg-50 mx-auto my-5 bg-dark text-light" style={{ minHeight: '10rem', maxWidth: '60vw' }}>
-                {/* ✅ Card.Header RESPONSIVE */}
+                {/* Card.Header */}
                 <Card.Header className='text-light p-3'>
                     <Row className="align-items-center g-2">
                         {/* Información del usuario - Ocupa más espacio en mobile */}

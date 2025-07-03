@@ -34,36 +34,6 @@ const HomeContent = () => {
         };
     }, []);
 
-    /*useEffect(() => {
-        const fetchPostsAndUsers = async () => {
-            try {
-                // 1. Obtener todos los posts
-                const posts = await getFunctions.getAllPosts();
-
-                // 2. Obtener el usuario correspondiente a cada post
-                const postsWithUsers = await Promise.all(
-                    posts.map(async (post) => {
-                        const user = await getFunctions.getUserByObjectId(post.userId);
-                        return {
-                            ...post,
-                            userId: user // Reemplaza el ID con el objeto del usuario
-                        };
-                    })
-                );
-
-                // 3. Ordenar por fecha (más reciente arriba)
-                postsWithUsers.sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
-
-                // 4. Guardar en el estado
-                setPosts(postsWithUsers);
-            } catch (error) {
-                console.error("Error fetching posts and users:", error);
-            }
-        };
-
-        fetchPostsAndUsers();
-    }, []);*/
-
     return (
         <>
             {posts.length > 0 ? (

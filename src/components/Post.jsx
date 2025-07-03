@@ -1,11 +1,13 @@
 import { deleteFunctions } from "./functions";
 import { API_URL } from '../config/api'
 import { Card, Button, Carousel, Row, Col } from "react-bootstrap";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import CommentsModal from "./CommentsModal";
 import FormEditarPost from "./FormEditarPost";
+import { UserContext } from "../context/UserContext";
 
-const Post = ({ user, post, tags }) => {
+const Post = ({post, tags }) => {
+  const {user} = useContext(UserContext);
   const [showModal, setShowModal] = useState(false);
   const [editando, setEditando] = useState(false);
 
@@ -59,7 +61,7 @@ const Post = ({ user, post, tags }) => {
               <div className="d-flex gap-1 flex-wrap justify-content-start justify-content-sm-center">
                 {tags &&
                   tags.length > 0 &&
-                  tags.map((tag, index) => (
+                  tags.map((tag, index) => (// Muestra los tags si existen
                     <Button
                       key={index}
                       variant="success"
@@ -76,7 +78,8 @@ const Post = ({ user, post, tags }) => {
               </div>
             </Col>
 
-            {/* Botones de acción  */}
+            {/* Botones de acción Editar y Eliminar */}
+            {user?(// Si hay usuario, muestra los botones de editar y eliminar            
             <Col xs={12} md={3}>
               <div className="d-flex flex-column flex-md-row gap-2 gap-md-1 justify-content-center justify-content-md-end">
                 <Button
@@ -103,6 +106,8 @@ const Post = ({ user, post, tags }) => {
                 </Button>
               </div>
             </Col>
+            ) : <></>
+}
           </Row>
         </Card.Header>
 
