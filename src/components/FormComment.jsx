@@ -1,44 +1,73 @@
 import { Card, Button, Form } from 'react-bootstrap';
 import { useState, useEffect } from 'react';
+import { API_URL, apiEndpoints } from '../config/api'
 
-const FormComment = ({ user }) => {
+const FormComment = ({ post, user }) => {
     const [content, setContent] = useState("");
     const [currentTime, setCurrentTime] = useState(new Date());
 
     useEffect(() => {
-        const timer = setInterval(() => setCurrentTime(new Date()), 60000); // 60000 = 1 minuto
+        const timer = setInterval(() => setCurrentTime(new Date()), 60000);
         return () => clearInterval(timer);
     }, []);
 
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        if (!content.trim()) {
+            alert("Debes escribir un comentario.");
+            return;
+        }
+
+        try {
+            // Crear el comentario
+            const nuevoComentario = {
+                postId: post._id,        // ← ID del post al que pertenece
+                userId: user._id,        // ← Usuario que comenta
+                content: content.trim() // ← Contenido del comentario
+            };
+
+            console.log("Payload del comentario:", nuevoComentario);
+            
+            const response = await fetch(`${API_URL}${apiEndpoints.comments}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(nuevoComentario)
+            });
+
+            if (!response.ok) throw new Error("Error al crear el comentario");
+
+            const comentarioCreado = await response.json();
+            console.log("Comentario creado:", comentarioCreado);
+
+            alert("¡Comentario publicado con éxito!");
+            setContent(""); // Limpiar el formulario
+            
+            // Disparar evento para actualizar la UI
+            window.dispatchEvent(new Event("nuevo-comentario-creado"));
+            
+        } catch (error) {
+            console.error("Error al comentar:", error);
+            alert("Ocurrió un error al intentar comentar.");
+        }
+    };
+
     return (
-        <Form>
-            <Card className="w-100 w-md-75 w-lg-50 mx-auto my-5 bg-light text-dark" style={{ minHeight: '10rem', maxWidth: '60vw' }}>
-                <Card.Header className='d-flex justify-content-between align-items-center text-dark gap-2'>
-                    <div>
-                        <Card.Title className="text-dark mb-1">@{user.nickName}</Card.Title>
-                        <Card.Subtitle className="text-secondary">
-                            {currentTime.toLocaleString(undefined, {
-                                dateStyle: 'short',
-                                timeStyle: 'short'
-                            })}
-                        </Card.Subtitle>
-                    </div>
-                </Card.Header>
-                <Card.Body className="">
-                    <Form.Control
-                        className="border-light text-justify"
-                        type="text"
-                        placeholder="¿Qué te gustaría comentar?"
-                        value={content}
-                        onChange={(e) => setContent(e.target.value)}
-                    />
-                </Card.Body>
-                <Card.Footer className='d-flex justify-content-center align-items-center gap-2 text-light p-3'>
-                    <Button variant="primary">Comentar</Button>
-                </Card.Footer>
-            </Card>
+        <Form onSubmit={handleSubmit}>
+            <Form.Control
+                type="text"
+                placeholder="Escribe tu comentario..."
+                value={content}
+                onChange={(e) => setContent(e.target.value)}
+                className="mb-2"
+            />
+            <Button variant="primary" type="submit">
+                Comentar
+            </Button>
         </Form>
-    )
-}
+    );
+};
 
 export default FormComment;

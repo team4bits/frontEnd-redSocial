@@ -7,10 +7,10 @@ import FormEditarPost from "./FormEditarPost";
 import { UserContext } from "../context/UserContext";
 import Tag from './Tag';
 
-
-const Post = ({ post, tags }) => {
+const Post = ({post, tags }) => {
   const { user } = useContext(UserContext);
   const [showModal, setShowModal] = useState(false);
+  const { user: loggedUser } = useContext(UserContext);
   const [editando, setEditando] = useState(false);
 
   if (!post) return null;
@@ -184,6 +184,7 @@ const Post = ({ post, tags }) => {
         onHide={handleCloseModal}
         post={post}
         user={user}
+        currentUser={loggedUser} // Asumiendo que el usuario actual es el mismo que el autor del post
       />
       {/* Fin del post normal */}
     </>
