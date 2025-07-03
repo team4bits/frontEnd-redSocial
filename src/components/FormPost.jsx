@@ -1,6 +1,5 @@
-import { Card, Button, Form, Row, Col } from 'react-bootstrap';
+import { Card, Button, Form, Row, Col} from 'react-bootstrap';
 import { useState, useEffect } from 'react';
-import { API_URL, apiEndpoints } from '../config/api';
 import FormTag from './FormTag';
 
 const FormPost = ({ user, onPostCreado }) => {
@@ -43,7 +42,7 @@ const FormPost = ({ user, onPostCreado }) => {
                 fecha: currentTime.toISOString()
             };
             console.log("Payload del post:", nuevoPost);
-            const responsePost = await fetch(`${API_URL}${apiEndpoints.posts}`, {
+            const responsePost = await fetch("http://localhost:3001/posts", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -62,7 +61,7 @@ const FormPost = ({ user, onPostCreado }) => {
                     formData.append("imagenes", img);
                 });
 
-                const responseArchivos = await fetch(`${API_URL}${apiEndpoints.archives}`, {
+                const responseArchivos = await fetch("http://localhost:3001/archives", {
                     method: "POST",
                     body: formData
                 });
@@ -84,16 +83,41 @@ const FormPost = ({ user, onPostCreado }) => {
         }
     };
 
-    return (<>
-        <Form onSubmit={handleSubmit}>
-            <Card className="w-100 w-md-75 w-lg-50 mx-auto my-5 bg-dark text-light" style={{ minHeight: '10rem', maxWidth: '60vw' }}>
-                {/* ✅ Card.Header RESPONSIVE */}
-                <Card.Header className='text-light p-3'>
-                    <Row className="align-items-center g-2">
-                        {/* Información del usuario - Ocupa más espacio en mobile */}
-                        <Col xs={12} sm={8} md={9}>
-                            <div>
-                                <Card.Title className="text-light mb-1 fs-6 fs-sm-5">
+    return (
+        <>
+            <Form onSubmit={handleSubmit}>
+                <Card 
+                    className="mx-auto my-5 bg-dark text-light" 
+                    style={{ 
+                        minHeight: '10rem', 
+                        width: '100%',
+                        maxWidth: 'min(90vw, 800px)' // Responsive sin clases Bootstrap
+                    }}
+                >
+                    {/* ✅ Card.Header con Flexbox */}
+                    <Card.Header className='text-light p-3'>
+                        {/* Contenedor principal - Responsive con Flexbox */}
+                        <div 
+                            className="d-flex gap-3"
+                            style={{
+                                flexDirection: window.innerWidth < 576 ? 'column' : 'row',
+                                alignItems: window.innerWidth < 576 ? 'stretch' : 'center'
+                            }}
+                        >
+                            {/* Información del usuario */}
+                            <div 
+                                className="d-flex flex-column"
+                                style={{ 
+                                    flex: window.innerWidth >= 768 ? '1' : 'none',
+                                    minWidth: 0 // Para permitir que el texto se corte
+                                }}
+                            >
+                                <Card.Title 
+                                    className="text-light mb-1"
+                                    style={{ 
+                                        fontSize: window.innerWidth < 576 ? '1rem' : '1.1rem'
+                                    }}
+                                >
                                     @{user.nickName}
                                 </Card.Title>
                                 <Card.Subtitle className="text-secondary small">
@@ -103,80 +127,121 @@ const FormPost = ({ user, onPostCreado }) => {
                                     })}
                                 </Card.Subtitle>
                             </div>
-                        </Col>
-                        
-                        {/* Botón - Se adapta al espacio disponible */}
-                        <Col xs={12} sm={4} md={3}>
-                            <div className="d-grid d-sm-block text-sm-end">
+                            
+                            {/* Botón Agregar Tag */}
+                            <div 
+                                className="d-flex"
+                                style={{
+                                    justifyContent: window.innerWidth < 576 ? 'center' : 'flex-end',
+                                    alignSelf: window.innerWidth < 576 ? 'stretch' : 'center'
+                                }}
+                            >
                                 <Button 
                                     variant="outline-success" 
                                     size="sm" 
                                     onClick={agregarTag}
-                                    className="w-100 w-sm-auto"
+                                    style={{
+                                        width: window.innerWidth < 576 ? '100%' : 'auto',
+                                        whiteSpace: 'nowrap'
+                                    }}
                                 >
-                                    {/* Texto adaptivo según el tamaño de pantalla */}
-                                    <span className="d-none d-md-inline">Agregar Tag</span>
-                                    <span className="d-md-none">+ Tag</span>
+                                    {/* Texto adaptivo */}
+                                    {window.innerWidth >= 768 ? 'Agregar Tag' : '+ Tag'}
                                 </Button>
                             </div>
-                        </Col>
-                    </Row>
+                        </div>
 
-                    {/* Mostrar tags seleccionados si existen */}
-                    {tags && tags.length > 0 && (
-                        <Row className="mt-3">
-                            <Col xs={12}>
-                                <div className="d-flex flex-wrap gap-1 align-items-center">
-                                    <small className="text-muted me-2">Tags:</small>
-                                    {tags.map((tag, index) => (
-                                        <span 
-                                            key={index} 
-                                            className="badge bg-success"
-                                            style={{ fontSize: '0.8rem' }}
-                                        >
-                                            #{tag}
-                                        </span>
-                                    ))}
+                        {/* Tags seleccionados */}
+                        {tags && tags.length > 0 && (
+                            <div className="mt-3">
+                                <div className="d-flex flex-wrap gap-2 align-items-center">
+                                    <small className="text-muted">Tags:</small>
+                                    <div className="d-flex flex-wrap gap-1">
+                                        {tags.map((tag, index) => (
+                                            <span 
+                                                key={index} 
+                                                className="badge bg-success"
+                                                style={{ fontSize: '0.8rem' }}
+                                            >
+                                                #{tag}
+                                            </span>
+                                        ))}
+                                    </div>
                                 </div>
-                            </Col>
-                        </Row>
-                    )}
-                </Card.Header>
+                            </div>
+                        )}
+                    </Card.Header>
 
-                <Card.Body className="text-light">
-                    <Form.Group controlId="formFile" className="mb-3">
-                        <Form.Control
-                            className="bg-dark text-light text-justify"
-                            type="file"
-                            accept="image/*"
-                            multiple
-                            onChange={handleImageChange}
-                        />
-                    </Form.Group>
+                    {/* ✅ Card.Body con Flexbox */}
+                    <Card.Body className="text-light">
+                        <div className="d-flex flex-column gap-3">
+                            {/* Input de archivos */}
+                            <Form.Group controlId="formFile">
+                                <Form.Control
+                                    className="bg-dark text-light"
+                                    type="file"
+                                    accept="image/*"
+                                    multiple
+                                    onChange={handleImageChange}
+                                />
+                                {imagenes.length > 0 && (
+                                    <Form.Text className="text-success small mt-1 d-block">
+                                        {imagenes.length} imagen(es) seleccionada(s)
+                                    </Form.Text>
+                                )}
+                            </Form.Group>
 
-                    <Form.Control
-                        className="bg-dark text-light border-light text-justify"
-                        type="text"
-                        placeholder="¿Qué estás pensando publicar?"
-                        value={content}
-                        onChange={(e) => setContent(e.target.value)}
-                        data-bs-theme="dark"
-                    />
-                </Card.Body>
+                            {/* Textarea del contenido */}
+                            <Form.Control
+                                as="textarea"
+                                rows={window.innerWidth < 768 ? 3 : 4}
+                                className="bg-dark text-light border-secondary"
+                                placeholder="¿Qué estás pensando publicar?"
+                                value={content}
+                                onChange={(e) => setContent(e.target.value)}
+                                style={{ 
+                                    resize: 'vertical',
+                                    minHeight: '80px'
+                                }}
+                            />
+                            
+                            {/* Contador de caracteres */}
+                            <Form.Text className="text-muted small text-end">
+                                {content.length}/500 caracteres
+                            </Form.Text>
+                        </div>
+                    </Card.Body>
 
-                <Card.Footer className='d-flex justify-content-center align-items-center gap-2 text-light p-3'>
-                    <Button variant="primary" type="submit">Publicar</Button>
-                </Card.Footer>
-            </Card>
-        </Form>
+                    {/* ✅ Card.Footer con Flexbox */}
+                    <Card.Footer className="bg-dark border-secondary p-3">
+                        <div className="d-flex justify-content-center">
+                            <Button 
+                                variant="primary" 
+                                type="submit"
+                                size={window.innerWidth < 576 ? 'lg' : 'md'}
+                                disabled={!content && imagenes.length === 0}
+                                style={{
+                                    width: window.innerWidth < 576 ? '100%' : 'auto',
+                                    minWidth: window.innerWidth >= 576 ? '120px' : 'auto'
+                                }}
+                            >
+                                <i className="bi bi-send me-2"></i>
+                                Publicar
+                            </Button>
+                        </div>
+                    </Card.Footer>
+                </Card>
+            </Form>
 
-        {/* Modal de Tags */}
-        <FormTag
-            show={showTagModal}
-            onHide={cerrarTagModal}
-        />
-    </>
+            {/* Modal de Tags */}
+            <FormTag
+                show={showTagModal}
+                onHide={cerrarTagModal}
+                user={user}
+            />
+        </>
     );
 };
 
 export default FormPost;
+

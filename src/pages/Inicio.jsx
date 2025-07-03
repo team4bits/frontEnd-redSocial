@@ -1,100 +1,40 @@
-import Post from '../components/Post';
 import FormPost from '../components/FormPost';
-import { useState, useEffect, useContext } from 'react';
+import { useContext } from 'react';
 import { UserContext } from '../context/UserContext';
-import { getFunctions } from '../components/functions';
 import { Container } from 'react-bootstrap';
 import HomeContent from '../components/home/HomeContent';
 import FormTag from '../components/FormTag';
 
 function Inicio() {
-  const [userComplete, setUserComplete] = useState(null);
+  //const [userComplete, setUserComplete] = useState(null);
   const { user } = useContext(UserContext);
 
-  useEffect(() => {
-    const loadUserComplete = async () => {
-      if (user?._id) {
-        try {
-          const userData = await getFunctions.getAUser(user._id);
-          setUserComplete(userData);
-        } catch (error) {
-          console.error("Error loading user:", error);
-        }
-      }
-    };
+  // useEffect(() => {
+  //   const loadUserComplete = async () => {
+  //     if (user?._id) {
+  //       try {
+  //         const userData = await getFunctions.getAUser(user._id);
+  //         setUserComplete(userData);
+  //       } catch (error) {
+  //         console.error("Error loading user:", error);
+  //       }
+  //     }
+  //   };
 
-    loadUserComplete();
-  }, [user?._id]);
+  //   loadUserComplete();
+  // }, [user?._id]);
 
   return (
     <Container fluid className="bg-secondary p-4 min-vh-100">
       <div className="w-100 w-md-75 w-lg-50 mx-auto">
-        {userComplete && (
-          <FormPost user={userComplete} />
+        {user && (
+          <FormPost user={user} />
         )}
         <HomeContent />
-        <FormTag user={userComplete} />
+        <FormTag />
       </div>
     </Container>
   );
 }
 
 export default Inicio;
-
-
-/*import Post from '../components/Post';
-import FormPost from '../components/FormPost';
-import { useState, useEffect, useContext } from 'react';
-import { UserContext } from '../context/UserContext';
-import { getFunctions } from '../components/functions';
-import { Container } from 'react-bootstrap';
-import HomeContent from '../components/home/HomeContent';
-
-function Inicio() {
-  const [userComplete, setUserComplete] = useState(null);
-  const [posts, setPosts] = useState([]); // Nuevo estado para los posts
-  const { user } = useContext(UserContext);
-
-  const fetchPosts = async () => {
-    try {
-      console.log("Ejecutando fetchPosts"); ///borrarlo es para probar
-      const res = await fetch("http://localhost:3001/posts");
-      const data = await res.json();
-      setPosts(data);
-    } catch (error) {
-      console.error("Error al obtener posts:", error);
-    }
-  };
-
-  useEffect(() => {
-    const loadUserComplete = async () => {
-      if (user?._id) {
-        try {
-          const userData = await getFunctions.getAUser(user._id);
-          setUserComplete(userData);
-        } catch (error) {
-          console.error("Error loading user:", error);
-        }
-      }
-    };
-
-    loadUserComplete();
-    fetchPosts(); // Carga inicial de posts
-  }, [user?._id]);
-
-  return (
-    <Container fluid className="bg-secondary p-4 min-vh-100">
-      <div className="w-100 w-md-75 w-lg-50 mx-auto">
-        {userComplete && (
-          <FormPost
-            user={userComplete}
-            onPostCreado={fetchPosts} // 🔁 Se actualiza al publicar
-          />
-        )}
-        <HomeContent posts={posts} />
-      </div>
-    </Container>
-  );
-}
-
-export default Inicio;*/

@@ -1,9 +1,5 @@
-import React from "react";
 import FormLogin from "../components/FormLogin";
-import { getAllUsers } from "../components/functions/get/getAllUsers";
 import logoImg from "../assets/ANTI-SOCIALNET.jpg";
-
-const usuarios = await getAllUsers();
 
 function Login() {
   return (
@@ -39,7 +35,7 @@ function Login() {
                 ¡Gracias por ser parte de nuestra comunidad!
               </p>
               {/* Cargar el formulario de registro pasandole los usuarios registrados hasta el momento*/}
-              <FormLogin usuarios={usuarios} />
+              <FormLogin />
             </div>
           </div>
         </div>

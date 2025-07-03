@@ -1,11 +1,15 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { Card, Button, Form } from 'react-bootstrap';
 import { API_URL, apiEndpoints } from '../config/api';
+import { UserContext } from '../context/UserContext';
+import FormTag from './FormTag'; 
 
-const FormEditarPost = ({ post, user, onCancel, onSuccess }) => {
+const FormEditarPost = ({ post, onCancel, onSuccess }) => {
+    const { user } = useContext(UserContext);
     const [content, setContent] = useState(post.content);
     const [imagenes, setImagenes] = useState([]);
     const [editandoImagenes, setEditandoImagenes] = useState(post.imagenes || []);
+    const [showTagModal, setShowTagModal] = useState(false);
 
     const handleImageChange = (e) => {
         const files = Array.from(e.target.files);
@@ -53,52 +57,149 @@ const FormEditarPost = ({ post, user, onCancel, onSuccess }) => {
                 if (!resUpload.ok) throw new Error("Error al subir nuevas imágenes");
             }
 
-            alert("¡Post actualizado con nuevas imágenes!");
+            alert("¡Post actualizado exitosamente!");
+            
+            // EVENTOS PARA ACTUALIZAR TODAS LAS VISTAS
+            window.dispatchEvent(new Event("nuevo-post-creado"));
+            window.dispatchEvent(new Event("post-actualizado"));
+            window.dispatchEvent(new Event("perfil-actualizado"));
+            
             onSuccess?.();
         } catch (error) {
-            console.error(error);
-            alert("Error al editar el post");
-        }        
+            console.error("Error al editar post:", error);
+            alert("Error al editar el post: " + error.message);
+        }
     };
 
-        return (
+    return (
+        <>
             <Form onSubmit={handleSubmit}>
-                <Card className="w-100 w-md-75 w-lg-50 mx-auto my-5 bg-dark text-light" style={{ minHeight: '20rem', maxWidth: '60vw' }}>
-                    <Card.Header className="d-flex justify-content-between align-items-center">
-                        <Card.Title className="mb-0">@{user.nickName}</Card.Title>
-                        <div className="d-flex gap-2">
-                            <Button size="sm" variant="secondary" onClick={onCancel}>Cancelar</Button>
-                            <Button size="sm" type="submit" variant="primary">Guardar</Button>
+                <Card 
+                    className="mx-auto my-5 bg-dark text-light" 
+                    style={{ 
+                        minHeight: '20rem', 
+                        width: '100%',
+                        maxWidth: 'min(90vw, 800px)'
+                    }}
+                >
+                    {/* Header responsive con Flexbox */}
+                    <Card.Header className="text-light p-3">
+                        <div 
+                            className="d-flex"
+                            style={{
+                                flexDirection: window.innerWidth < 576 ? 'column' : 'row',
+                                justifyContent: 'space-between',
+                                alignItems: window.innerWidth < 576 ? 'stretch' : 'center',
+                                gap: window.innerWidth < 576 ? '1rem' : '0.5rem'
+                            }}
+                        >
+                            {/* Título del usuario */}
+                            <Card.Title 
+                                className="mb-0"
+                                style={{ 
+                                    fontSize: window.innerWidth < 576 ? '1rem' : '1.1rem'
+                                }}
+                            >
+                                Editando post de @{user.nickName}
+                            </Card.Title>
+                            
+                            {/* Botones de acción */}
+                            <div 
+                                className="d-flex gap-2"
+                                style={{
+                                    flexDirection: window.innerWidth < 576 ? 'column' : 'row'
+                                }}
+                            >
+                                <Button 
+                                    size="sm" 
+                                    variant="secondary" 
+                                    onClick={onCancel}
+                                    style={{
+                                        width: window.innerWidth < 576 ? '100%' : 'auto'
+                                    }}
+                                >
+                                    Cancelar
+                                </Button>
+                                <Button 
+                                    size="sm" 
+                                    type="submit" 
+                                    variant="primary"
+                                    style={{
+                                        width: window.innerWidth < 576 ? '100%' : 'auto'
+                                    }}
+                                >
+                                    Guardar
+                                </Button>
+                            </div>
                         </div>
                     </Card.Header>
-                    <Card.Body>
-                        <Form.Group controlId="editContent" className="mb-3">
-                            <Form.Control
-                                as="textarea"
-                                rows={3}
-                                value={content}
-                                onChange={(e) => setContent(e.target.value)}
-                                className="bg-dark text-light"
-                            />
-                        </Form.Group>
 
-                        <Form.Group controlId="editImages" className="mb-3">
-                            <Form.Label>Reemplazar imágenes existentes</Form.Label>
-                            <Form.Control
-                                type="file"
-                                multiple
-                                accept="image/*"
-                                onChange={handleImageChange}
-                                className="bg-dark text-light"
-                            />
-                            <Form.Text className="text-muted">
-                                Se reemplazarán hasta {editandoImagenes.length} imágenes existentes.
-                            </Form.Text>
-                        </Form.Group>
+                    {/* Body con Flexbox */}
+                    <Card.Body className="p-3">
+                        <div className="d-flex flex-column gap-3">
+                            {/* Textarea del contenido */}
+                            <Form.Group controlId="editContent">
+                                <Form.Label className="text-light">Contenido del post:</Form.Label>
+                                <Form.Control
+                                    as="textarea"
+                                    rows={window.innerWidth < 768 ? 3 : 4}
+                                    value={content}
+                                    onChange={(e) => setContent(e.target.value)}
+                                    className="bg-dark text-light border-secondary"
+                                    placeholder="Escribe el contenido de tu post..."
+                                    style={{ 
+                                        resize: 'vertical',
+                                        minHeight: '80px'
+                                    }}
+                                />
+                            </Form.Group>
+
+                            {/* Input de imágenes */}
+                            <Form.Group controlId="editImages">
+                                <Form.Label className="text-light">Reemplazar imágenes:</Form.Label>
+                                <Form.Control
+                                    type="file"
+                                    multiple
+                                    accept="image/*"
+                                    onChange={handleImageChange}
+                                    className="bg-dark text-light border-secondary"
+                                />
+                                <Form.Text className="text-muted">
+                                    Se reemplazarán hasta {editandoImagenes.length} imágenes existentes.
+                                </Form.Text>
+                                {imagenes.length > 0 && (
+                                    <Form.Text className="text-success d-block">
+                                        {imagenes.length} nueva(s) imagen(es) seleccionada(s)
+                                    </Form.Text>
+                                )}
+                            </Form.Group>
+                        </div>
                     </Card.Body>
+
+                    {/* Footer con botón de tags */}
+                    <Card.Footer className="bg-dark border-secondary p-3">
+                        <div className="d-flex justify-content-center">
+                            <Button 
+                                variant="outline-success" 
+                                size="sm" 
+                                onClick={() => setShowTagModal(true)}
+                            >
+                                <i className="bi bi-tags me-2"></i>
+                                Editar Tags
+                            </Button>
+                        </div>
+                    </Card.Footer>
                 </Card>
             </Form>
-        );
-    };
 
-    export default FormEditarPost;
+            {/* Modal de Tags */}
+            <FormTag
+                show={showTagModal}
+                onHide={() => setShowTagModal(false)}
+                user={user}
+            />
+        </>
+    );
+};
+
+export default FormEditarPost;

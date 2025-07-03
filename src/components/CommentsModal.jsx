@@ -2,89 +2,88 @@ import { Modal, Button } from 'react-bootstrap';
 import Comment from './Comment';
 import FormComment from './FormComment';
 import { getFunctions } from './functions';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 
-const CommentsModal = ({ show, onHide, post, user }) => {
+const CommentsModal = ({ show, onHide, post, user, currentUser }) => {
   const [commentsWithUsers, setCommentsWithUsers] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchUsersForComments = async () => {
-      if (post?.comments && post.comments.length > 0) {
-        try {
-          setLoading(true);
-          
-          // Cargar usuarios para cada comentario
-          const commentsWithUserData = await Promise.all(
-            post.comments.map(async (comment) => {
-              let userId;
-              
-              // Detectar el formato del userId
-              if (typeof comment.userId === 'string') {
-                // Caso Inicio: userId es un string
-                userId = comment.userId;
-              } else if (comment.userId && comment.userId._id) {
-                // Caso Perfil: userId es un objeto con _id
-                userId = comment.userId._id;
-              } else {
-                console.error("Formato de userId no reconocido:", comment.userId);
-                return comment; // Retornar sin modificar si no se puede procesar
-              }
-              
-              const userData = await getFunctions.getUserByObjectId(userId);
-              
-              return {
-                ...comment,
-                user: userData // ← Reemplazar userId por user con datos completos
-              };
-            })
-          );
-          
-          setCommentsWithUsers(commentsWithUserData);
-          setLoading(false);
-        } catch (error) {
-          console.error("Error fetching users for comments:", error);
-          setLoading(false);
-        }
-      } else {
-        setCommentsWithUsers([]);
+  const fetchUsersForComments = useCallback(async () => {
+    if (post?.comments && post.comments.length > 0) {
+      try {
+        setLoading(true);
+
+        const commentsWithUserData = await Promise.all(
+          post.comments.map(async (comment) => {
+            let userId;
+
+            if (typeof comment.userId === 'string') {
+              userId = comment.userId;
+            } else if (comment.userId && comment.userId._id) {
+              userId = comment.userId._id;
+            } else {
+              console.error("Formato de userId no reconocido:", comment.userId);
+              return comment;
+            }
+
+            const userData = await getFunctions.getUserByObjectId(userId);
+            return { ...comment, user: userData };
+          })
+        );
+
+        setCommentsWithUsers(commentsWithUserData);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching users for comments:", error);
         setLoading(false);
       }
+    } else {
+      setCommentsWithUsers([]);
+      setLoading(false);
+    }
+  }, [post]);
+
+  // useEffect para cargar comentarios inicialmente
+  useEffect(() => {
+    fetchUsersForComments();
+  }, [fetchUsersForComments]);
+
+  // useEffect para el event listener
+  useEffect(() => {
+    const handler = () => {
+      console.log("🔄 Recargando página...");
+      window.location.reload();
+    
     };
 
-    fetchUsersForComments();
-  }, [post?.comments]);
+    window.addEventListener("nuevo-comentario-creado", handler);
+    return () => window.removeEventListener("nuevo-comentario-creado", handler);
+  }, []);
 
   return (
-    <Modal
-      show={show}
-      onHide={onHide}
-      size="lg"
-      backdrop="static"
-    >
+    <Modal show={show} onHide={onHide} size="lg" backdrop="static">
       <Modal.Header closeButton className="bg-dark text-light">
         <Modal.Title>
           Comentarios del post de @{user?.nickName || 'Usuario'}
         </Modal.Title>
       </Modal.Header>
 
-      <Modal.Body className="bg-dark text-light" style={{ maxHeight: '60vh', overflowY: 'auto' }}>
-        {/* Lista de comentarios existentes */}
+      <Modal.Body className="bg-secondary text-light" style={{ maxHeight: '60vh', overflowY: 'auto' }}>
         <div className="mb-4">
           <h6 className="text-light mb-3">
             Comentarios ({commentsWithUsers?.length || 0}):
           </h6>
-          
+
           {loading ? (
             <div className="text-center p-4">
               <p>Cargando comentarios...</p>
             </div>
-          ) : commentsWithUsers && commentsWithUsers.length > 0 ? (
+          ) : commentsWithUsers.length > 0 ? (
             commentsWithUsers.map((comment) => (
               <Comment
                 key={comment._id}
                 comment={comment}
-                user={comment.user} // ← Ahora user tiene todos los datos
+                user={comment.user}
               />
             ))
           ) : (
@@ -95,15 +94,14 @@ const CommentsModal = ({ show, onHide, post, user }) => {
           )}
         </div>
 
-        {/* Formulario para agregar comentario - abajo de los comentarios */}
-        <div className="mt-3 p-3 border border-secondary rounded">
+        <div className="mt-3 p-3 border border-light rounded bg-dark">
           <h6 className="text-light mb-3">Agregar un comentario:</h6>
-          <FormComment post={post} user={user} />
+          <FormComment post={post} user={currentUser} />
         </div>
       </Modal.Body>
 
       <Modal.Footer className="bg-dark">
-        <Button variant="secondary" onClick={onHide}>
+        <Button variant="danger" onClick={onHide}>
           Cerrar
         </Button>
       </Modal.Footer>
