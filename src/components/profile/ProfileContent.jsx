@@ -34,6 +34,10 @@ const ProfileContent = ({ activeTab, user }) => {
 
   if (!user) return <div>Cargando...</div>;
 
+  posts.forEach(post => {
+    console.log(post.tags)
+  })
+
   return (
     <>
       {activeTab === 'posts' && (
@@ -45,6 +49,7 @@ const ProfileContent = ({ activeTab, user }) => {
                 key={post._id}
                 user={user}
                 post={post}
+                tags={post.tags || []}
               />
             ))
           ) : (
