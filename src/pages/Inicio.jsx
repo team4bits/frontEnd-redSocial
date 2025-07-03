@@ -31,11 +31,10 @@ function Inicio() {
           <FormPost user={user} />
         )}
         <HomeContent />
-        <FormTag user={user} />
+        <FormTag />
       </div>
     </Container>
   );
 }
 
 export default Inicio;
-

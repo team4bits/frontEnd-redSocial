@@ -5,6 +5,8 @@ import { useState, useContext } from "react";
 import CommentsModal from "./CommentsModal";
 import FormEditarPost from "./FormEditarPost";
 import { UserContext } from "../context/UserContext";
+import Tag from './Tag';
+
 
 const Post = ({post, tags }) => {
   const {user} = useContext(UserContext);
@@ -25,8 +27,8 @@ const Post = ({post, tags }) => {
     await deleteFunctions.deletePost(post._id);
   };
 
-  
   return editando ? (//Si se está editando, se muestra el formulario de edición
+
     <FormEditarPost
       post={post}
       user={user}
@@ -36,6 +38,7 @@ const Post = ({post, tags }) => {
         window.dispatchEvent(new Event("nuevo-post-creado"));
       }}
     />
+
   ) : (// Si no está editando, mostrar el post normal
     <>{/*Inicio del post normal*/}
       <Card
@@ -109,6 +112,7 @@ const Post = ({post, tags }) => {
             ) : <></>
 }
           </Row>
+
         </Card.Header>
 
         {/* Sección de imágenes */}

@@ -89,6 +89,7 @@ const HomeContent = () => {
         fetchPostsAndUsers();
     }, []);
 
+
     return (
         <>
             {posts.length > 0 ? (
@@ -107,4 +108,4 @@ const HomeContent = () => {
     );
 };
 
-export default HomeContent;*/
+export default HomeContent;

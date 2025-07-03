@@ -1,6 +1,5 @@
-import { Card, Button, Form, Row, Col } from 'react-bootstrap';
+import { Card, Button, Form } from 'react-bootstrap';
 import { useState, useEffect } from 'react';
-import { API_URL, apiEndpoints } from '../config/api';
 import FormTag from './FormTag';
 
 const FormPost = ({ user, onPostCreado }) => {
@@ -37,13 +36,21 @@ const FormPost = ({ user, onPostCreado }) => {
         }
 
         try {
+            // 1. Crear el post vacío (sin imágenes)
+            /*const nuevoPost = {
+                userId: user._id,
+                content,
+                fecha: currentTime.toISOString(),
+                tags
+            };*/
             const nuevoPost = {
                 userId: user._id,
                 content,
                 fecha: currentTime.toISOString()
+                // No enviar 'tags' al crear el post
             };
             console.log("Payload del post:", nuevoPost);
-            const responsePost = await fetch(`${API_URL}${apiEndpoints.posts}`, {
+            const responsePost = await fetch("http://localhost:3001/posts", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -55,14 +62,15 @@ const FormPost = ({ user, onPostCreado }) => {
 
             const postCreado = await responsePost.json();
 
+            // 2. Si hay imágenes, subirlas con el postId
             if (imagenes.length > 0) {
                 const formData = new FormData();
                 formData.append("postId", postCreado._id);
                 imagenes.forEach((img) => {
-                    formData.append("imagenes", img);
+                    formData.append("imagenes", img); // campo correcto: 'imagenes'
                 });
 
-                const responseArchivos = await fetch(`${API_URL}${apiEndpoints.archives}`, {
+                const responseArchivos = await fetch("http://localhost:3001/archives", {
                     method: "POST",
                     body: formData
                 });
@@ -141,6 +149,7 @@ const FormPost = ({ user, onPostCreado }) => {
                             </Col>
                         </Row>
                     )}
+
                 </Card.Header>
 
                 <Card.Body className="text-light">
@@ -180,3 +189,4 @@ const FormPost = ({ user, onPostCreado }) => {
 };
 
 export default FormPost;
+

@@ -7,10 +7,19 @@ const FormEditarPost = ({ post, onCancel, onSuccess }) => {
     const [content, setContent] = useState(post.content);
     const [imagenes, setImagenes] = useState([]);
     const [editandoImagenes, setEditandoImagenes] = useState(post.imagenes || []);
+    const [showTagModal, setShowTagModal] = useState(false);
 
     const handleImageChange = (e) => {
         const files = Array.from(e.target.files);
         setImagenes(files);
+    };
+
+    const agregarTag = () => {
+        setShowTagModal(true);
+    };
+
+    const cerrarTagModal = () => {
+        setShowTagModal(false);
     };
 
     const handleSubmit = async (e) => {
@@ -59,10 +68,11 @@ const FormEditarPost = ({ post, onCancel, onSuccess }) => {
         } catch (error) {
             console.error(error);
             alert("Error al editar el post");
-        }        
+        }
     };
 
-        return (
+    return (
+        <>
             <Form onSubmit={handleSubmit}>
                 <Card className="w-100 w-md-75 w-lg-50 mx-auto my-5 bg-dark text-light" style={{ minHeight: '20rem', maxWidth: '60vw' }}>
                     <Card.Header className="d-flex justify-content-between align-items-center">
@@ -97,9 +107,23 @@ const FormEditarPost = ({ post, onCancel, onSuccess }) => {
                             </Form.Text>
                         </Form.Group>
                     </Card.Body>
+                    <Card.Footer>
+                        <Button variant="outline-success" size="sm" onClick={agregarTag}>
+                            Agregar Tag
+                        </Button>
+                        <FormTag />
+                    </Card.Footer>
                 </Card>
-            </Form>
-        );
-    };
 
-    export default FormEditarPost;
+            </Form>
+            {/* Modal de Tags */}
+            <FormTag
+                show={showTagModal}
+                onHide={cerrarTagModal}
+            />
+
+        </>
+    );
+};
+
+export default FormEditarPost;
