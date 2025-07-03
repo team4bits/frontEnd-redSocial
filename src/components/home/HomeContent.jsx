@@ -117,8 +117,7 @@ const HomeContent = () => {
         };
 
         fetchPostsAndUsers();
-    }, []); // ← Se ejecuta solo al montar el componente
-
+    }, []);
 
     return (
         <>
@@ -128,6 +127,7 @@ const HomeContent = () => {
                         key={post._id}
                         user={post.userId}
                         post={post}
+                        tags={post.tags || []}
                     />
                 ))
             ) : (
@@ -135,6 +135,6 @@ const HomeContent = () => {
             )}
         </>
     );
-}; // ← Cerrar el componente aquí
+};
 
 export default HomeContent;*/

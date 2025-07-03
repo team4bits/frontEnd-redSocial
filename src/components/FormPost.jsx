@@ -1,12 +1,14 @@
-import { Card, Button, Form } from 'react-bootstrap';
+import { Card, Button, Form, Row, Col } from 'react-bootstrap';
 import { useState, useEffect } from 'react';
 import { API_URL, apiEndpoints } from '../config/api';
+import FormTag from './FormTag';
 
 const FormPost = ({ user, onPostCreado }) => {
     const [content, setContent] = useState("");
     const [imagenes, setImagenes] = useState([]);
-    const [tags, setTags] = useState([]); // si lo usás más adelante
+    const [tags, setTags] = useState([]);
     const [currentTime, setCurrentTime] = useState(new Date());
+    const [showTagModal, setShowTagModal] = useState(false);
 
     useEffect(() => {
         const timer = setInterval(() => setCurrentTime(new Date()), 60000);
@@ -18,6 +20,14 @@ const FormPost = ({ user, onPostCreado }) => {
         setImagenes(files);
     };
 
+    const agregarTag = () => {
+        setShowTagModal(true);
+    };
+
+    const cerrarTagModal = () => {
+        setShowTagModal(false);
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -27,18 +37,10 @@ const FormPost = ({ user, onPostCreado }) => {
         }
 
         try {
-            // 1. Crear el post vacío (sin imágenes)
-            /*const nuevoPost = {
-                userId: user._id,
-                content,
-                fecha: currentTime.toISOString(),
-                tags
-            };*/
             const nuevoPost = {
                 userId: user._id,
                 content,
                 fecha: currentTime.toISOString()
-                // No enviar 'tags' al crear el post
             };
             console.log("Payload del post:", nuevoPost);
             const responsePost = await fetch(`${API_URL}${apiEndpoints.posts}`, {
@@ -53,12 +55,11 @@ const FormPost = ({ user, onPostCreado }) => {
 
             const postCreado = await responsePost.json();
 
-            // 2. Si hay imágenes, subirlas con el postId
             if (imagenes.length > 0) {
                 const formData = new FormData();
                 formData.append("postId", postCreado._id);
                 imagenes.forEach((img) => {
-                    formData.append("imagenes", img); // campo correcto: 'imagenes'
+                    formData.append("imagenes", img);
                 });
 
                 const responseArchivos = await fetch(`${API_URL}${apiEndpoints.archives}`, {
@@ -83,22 +84,63 @@ const FormPost = ({ user, onPostCreado }) => {
         }
     };
 
-    return (
+    return (<>
         <Form onSubmit={handleSubmit}>
             <Card className="w-100 w-md-75 w-lg-50 mx-auto my-5 bg-dark text-light" style={{ minHeight: '10rem', maxWidth: '60vw' }}>
-                <Card.Header className='d-flex justify-content-between align-items-center text-light gap-2'>
-                    <div>
-                        <Card.Title className="text-light mb-1">@{user.nickName}</Card.Title>
-                        <Card.Subtitle className="text-secondary">
-                            {currentTime.toLocaleString(undefined, {
-                                dateStyle: 'short',
-                                timeStyle: 'short'
-                            })}
-                        </Card.Subtitle>
-                    </div>
-                    <Button variant="outline-success" size="sm">
-                        Agregar Tag
-                    </Button>
+                {/* ✅ Card.Header RESPONSIVE */}
+                <Card.Header className='text-light p-3'>
+                    <Row className="align-items-center g-2">
+                        {/* Información del usuario - Ocupa más espacio en mobile */}
+                        <Col xs={12} sm={8} md={9}>
+                            <div>
+                                <Card.Title className="text-light mb-1 fs-6 fs-sm-5">
+                                    @{user.nickName}
+                                </Card.Title>
+                                <Card.Subtitle className="text-secondary small">
+                                    {currentTime.toLocaleString(undefined, {
+                                        dateStyle: 'short',
+                                        timeStyle: 'short'
+                                    })}
+                                </Card.Subtitle>
+                            </div>
+                        </Col>
+                        
+                        {/* Botón - Se adapta al espacio disponible */}
+                        <Col xs={12} sm={4} md={3}>
+                            <div className="d-grid d-sm-block text-sm-end">
+                                <Button 
+                                    variant="outline-success" 
+                                    size="sm" 
+                                    onClick={agregarTag}
+                                    className="w-100 w-sm-auto"
+                                >
+                                    {/* Texto adaptivo según el tamaño de pantalla */}
+                                    <span className="d-none d-md-inline">Agregar Tag</span>
+                                    <span className="d-md-none">+ Tag</span>
+                                </Button>
+                            </div>
+                        </Col>
+                    </Row>
+
+                    {/* Mostrar tags seleccionados si existen */}
+                    {tags && tags.length > 0 && (
+                        <Row className="mt-3">
+                            <Col xs={12}>
+                                <div className="d-flex flex-wrap gap-1 align-items-center">
+                                    <small className="text-muted me-2">Tags:</small>
+                                    {tags.map((tag, index) => (
+                                        <span 
+                                            key={index} 
+                                            className="badge bg-success"
+                                            style={{ fontSize: '0.8rem' }}
+                                        >
+                                            #{tag}
+                                        </span>
+                                    ))}
+                                </div>
+                            </Col>
+                        </Row>
+                    )}
                 </Card.Header>
 
                 <Card.Body className="text-light">
@@ -127,6 +169,13 @@ const FormPost = ({ user, onPostCreado }) => {
                 </Card.Footer>
             </Card>
         </Form>
+
+        {/* Modal de Tags */}
+        <FormTag
+            show={showTagModal}
+            onHide={cerrarTagModal}
+        />
+    </>
     );
 };
 
