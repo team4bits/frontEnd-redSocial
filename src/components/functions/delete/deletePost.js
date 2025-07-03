@@ -14,7 +14,7 @@ export async function deletePost(postId) {
       if (!res.ok) throw new Error("Error al eliminar el post");
 
       alert("Post eliminado correctamente.");
-      window.dispatchEvent(new Event("nuevo-post-creado"));
+      window.dispatchEvent(new Event("nuevo-post-eliminado"));
     } catch (err) {
       console.error("Error al eliminar:", err);
       alert("Hubo un error al eliminar el post.");
