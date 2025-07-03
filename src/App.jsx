@@ -19,10 +19,7 @@ import { UsuariosProvider } from "./context/UsuariosContext";
 function App() {
   // Estado global para el usuario logueado.
   // Al iniciar la app, intenta cargarlo desde localStorage.
-  const [user, setUser] = useState(() => {
-    const saved = localStorage.getItem("user"); // Busca en el almacenamiento local
-    return saved ? JSON.parse(saved) : null; // Si existe, lo convierte de texto a objeto
-  });
+  const [user, setUser] = useState(null);
 
   // Cada vez que el estado "user" cambia, lo guarda o elimina del localStorage
   useEffect(() => {
