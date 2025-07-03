@@ -4,7 +4,7 @@ import { getAllUsers } from './get/getAllUsers'
 import {registrarUsuario} from './post'
 import {validarMail, validarNickName} from './validators'
 import {putFunctions} from './put'
-import {deleteUser, deletePost} from './delete'
+import {deleteUser, deletePost, deleteComment} from './delete'
 const getFunctions = {
     getUsersNickNames,
     getUsersEmails,
@@ -25,7 +25,8 @@ const validators = {
 }
 const deleteFunctions = {
     deleteUser,
-    deletePost
+    deletePost,
+    deleteComment
 }
 export {
     getFunctions,
