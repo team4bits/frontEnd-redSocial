@@ -34,10 +34,6 @@ const ProfileContent = ({ activeTab, user }) => {
 
   if (!user) return <div>Cargando...</div>;
 
-  posts.forEach(post => {
-    console.log(post.tags)
-  })
-
   return (
     <>
       {activeTab === 'posts' && (

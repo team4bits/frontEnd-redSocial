@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Alert } from 'react-bootstrap'; // ← Faltaba este import
-import Post from '../Post'; // ← Faltaba este import
+import { Alert } from 'react-bootstrap';
+import Post from '../Post';
 import { getFunctions } from '../functions';
 
 const HomeContent = () => {
@@ -31,8 +31,7 @@ const HomeContent = () => {
         };
 
         fetchPostsAndUsers();
-    }, []); // ← Se ejecuta solo al montar el componente
-
+    }, []);
 
     return (
         <>
@@ -49,6 +48,6 @@ const HomeContent = () => {
             )}
         </>
     );
-}; // ← Cerrar el componente aquí
+};
 
 export default HomeContent;
