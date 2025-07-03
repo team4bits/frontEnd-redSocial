@@ -81,7 +81,7 @@ const Post = ({post, tags, user: postUser }) => {
             </Col>
 
             {/* Botones de acción Editar y Eliminar */}
-            {loggedUser ? (// Si hay usuario, muestra los botones de editar y eliminar            
+            {loggedUser && loggedUser._id === post.userId ? (// Si hay usuario, muestra los botones de editar y eliminar
               <Col xs={12} md={3}>
                 <div className="d-flex flex-column flex-md-row gap-2 gap-md-1 justify-content-center justify-content-md-end">
                   <Button
