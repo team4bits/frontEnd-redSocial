@@ -7,8 +7,7 @@ import FormEditarPost from "./FormEditarPost";
 import { UserContext } from "../context/UserContext";
 import Tag from './Tag';
 
-const Post = ({post, tags }) => {
-  const { user } = useContext(UserContext);
+const Post = ({post, tags, user: postUser }) => {
   const [showModal, setShowModal] = useState(false);
   const { user: loggedUser } = useContext(UserContext);
   const [editando, setEditando] = useState(false);
@@ -31,7 +30,7 @@ const Post = ({post, tags }) => {
 
     <FormEditarPost
       post={post}
-      user={user}
+      user={loggedUser}
       onCancel={() => setEditando(false)}
       onSuccess={() => {
         setEditando(false);
@@ -51,7 +50,7 @@ const Post = ({post, tags }) => {
             <Col xs={12} sm={6} md={4} lg={3}>
               <div>
                 <Card.Title className="text-light mb-1 fs-6 fs-sm-5">
-                  @{user?.nickName || "Usuario"}
+                  @{postUser?.nickName || "Usuario"}
                 </Card.Title>
                 <Card.Subtitle className="text-secondary small">
                   {post.fecha}
@@ -82,7 +81,7 @@ const Post = ({post, tags }) => {
             </Col>
 
             {/* Botones de acción Editar y Eliminar */}
-            {user ? (// Si hay usuario, muestra los botones de editar y eliminar            
+            {loggedUser ? (// Si hay usuario, muestra los botones de editar y eliminar            
               <Col xs={12} md={3}>
                 <div className="d-flex flex-column flex-md-row gap-2 gap-md-1 justify-content-center justify-content-md-end">
                   <Button
@@ -183,7 +182,7 @@ const Post = ({post, tags }) => {
         show={showModal}
         onHide={handleCloseModal}
         post={post}
-        user={user}
+        user={postUser}
         currentUser={loggedUser} // Asumiendo que el usuario actual es el mismo que el autor del post
       />
       {/* Fin del post normal */}

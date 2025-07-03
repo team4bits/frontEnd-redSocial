@@ -1,9 +1,11 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { Card, Button, Form } from 'react-bootstrap';
 import { API_URL, apiEndpoints } from '../config/api';
-import FormTag from './FormTag';
+import { UserContext } from '../context/UserContext';
+import FormTag from './FormTag'; 
 
-const FormEditarPost = ({ post, user, onCancel, onSuccess }) => {
+const FormEditarPost = ({ post, onCancel, onSuccess }) => {
+    const { user } = useContext(UserContext);
     const [content, setContent] = useState(post.content);
     const [imagenes, setImagenes] = useState([]);
     const [editandoImagenes, setEditandoImagenes] = useState(post.imagenes || []);
