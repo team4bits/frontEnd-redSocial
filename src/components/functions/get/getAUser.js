@@ -3,8 +3,6 @@ import { API_URL, apiEndpoints } from '../../../config/api'; // Importa la URL d
 export const getAUser = async (userId) => {
   /*
   * Función para obtener un usuario por su ID
-  Se está usando una api con otro host
-  Cambiar a localhost si es necesario
   */
   try {
     const response = await fetch(`${API_URL}${apiEndpoints.users}/${userId}`); // Se usa la URL de la API y el endpoint de usuarios con el ID específico
