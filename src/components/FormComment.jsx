@@ -55,13 +55,13 @@ const FormComment = ({ post, user }) => {
     };
 
     return (
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmit} >
             <Form.Control
                 type="text"
                 placeholder="Escribe tu comentario..."
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
-                className="mb-2"
+                className='mb-3'
             />
             <Button variant="primary" type="submit">
                 Comentar

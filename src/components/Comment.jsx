@@ -35,11 +35,11 @@ const Comment = ({ comment }) => {
                     <Card.Subtitle className="text-muted">{comment.fecha} </Card.Subtitle>
                 </div>
                 <div className='d-flex gap-2'>
-                    <Button variant="outline-warning"
+                    <Button variant="warning"
                         size="sm"
                         onClick={() => setEditando(true)}
                         className="w-100 w-md-auto">Editar</Button>
-                    <Button variant="outline-danger"
+                    <Button variant="danger"
                         size="sm"
                         className="w-100 w-md-auto"
                         onClick={eliminarComment}>Eliminar</Button>

@@ -68,7 +68,7 @@ const CommentsModal = ({ show, onHide, post, user, currentUser }) => {
         </Modal.Title>
       </Modal.Header>
 
-      <Modal.Body className="bg-dark text-light" style={{ maxHeight: '60vh', overflowY: 'auto' }}>
+      <Modal.Body className="bg-secondary text-light" style={{ maxHeight: '60vh', overflowY: 'auto' }}>
         <div className="mb-4">
           <h6 className="text-light mb-3">
             Comentarios ({commentsWithUsers?.length || 0}):
@@ -94,14 +94,14 @@ const CommentsModal = ({ show, onHide, post, user, currentUser }) => {
           )}
         </div>
 
-        <div className="mt-3 p-3 border border-secondary rounded">
+        <div className="mt-3 p-3 border border-light rounded bg-dark">
           <h6 className="text-light mb-3">Agregar un comentario:</h6>
           <FormComment post={post} user={currentUser} />
         </div>
       </Modal.Body>
 
       <Modal.Footer className="bg-dark">
-        <Button variant="secondary" onClick={onHide}>
+        <Button variant="danger" onClick={onHide}>
           Cerrar
         </Button>
       </Modal.Footer>
