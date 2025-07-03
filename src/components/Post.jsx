@@ -120,10 +120,12 @@ export default Post;
 
 /*import { Card, Button, Carousel } from 'react-bootstrap';
 
-const Post = ({user, post, tags}) => {
+
+const Post = ({ user, post, tags }) => {
   if (!post) return null;
-  
+
   // Validaciones para imágenes
+  console.log(post.imagenes);
   const imagenes = post.imagenes || [];
   const tieneImagenes = imagenes && imagenes.length > 0;
 
@@ -136,9 +138,7 @@ const Post = ({user, post, tags}) => {
         </div>
         <div className='d-flex gap-1 flex-wrap justify-content-center'>
           {tags && tags.length > 0 && tags.map((tag, index) => (
-            <Button key={index} variant="success" size="sm">
-              {tag.nameTag}
-            </Button>
+            <Tag key={index} name={tag.nameTag} />
           ))}
         </div>
         <div className='d-flex gap-2'>
@@ -153,10 +153,10 @@ const Post = ({user, post, tags}) => {
           {imagenes.length > 1 ? (
             <Carousel indicators={true} controls={true} interval={null} className="w-100">
               {imagenes.map((imageObj, index) => {
+                console.log(imageObj);
                 if (!imageObj || !imageObj.imagen) {
                   return null;
                 }
-                
                 return (
                   <Carousel.Item key={imageObj._id || index}>
                     <img
@@ -174,21 +174,16 @@ const Post = ({user, post, tags}) => {
               })}
             </Carousel>
           ) : (
-            imagenes[0] && imagenes[0].imagen ? (
-              <img
-                className="d-block w-100 rounded"
-                src={`http://localhost:3001${imagenes[0].imagen}`}
-                alt="Imagen del post"
-                style={{ height: '35rem', objectFit: 'contain' }}
-                onError={(e) => {
-                  e.target.src = 'https://via.placeholder.com/400x300?text=Error+al+cargar';
-                }}
-              />
-            ) : (
-              <div className="p-3 text-center text-secondary">
-                <small>Imagen no disponible</small>
-              </div>
-            )
+            imagenes.length === 1 &&
+            <img
+              className="d-block w-100 rounded"
+              src={`http://localhost:3001${imagenes[0].imagen}`}
+              alt="Imagen del post"
+              style={{ height: '35rem', objectFit: 'contain' }}
+              onError={(e) => {
+                e.target.src = 'https://via.placeholder.com/400x300?text=Error+al+cargar';
+              }}
+            />
           )}
         </div>
       )}
