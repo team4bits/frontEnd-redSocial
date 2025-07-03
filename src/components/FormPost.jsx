@@ -147,4 +147,3 @@ const FormPost = ({ user, onPostCreado }) => {
 };
 
 export default FormPost;
-
