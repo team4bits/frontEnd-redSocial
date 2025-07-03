@@ -7,10 +7,10 @@ import FormEditarPost from "./FormEditarPost";
 import { UserContext } from "../context/UserContext";
 import Tag from './Tag';
 
-
 const Post = ({post, tags }) => {
-  const {user} = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const [showModal, setShowModal] = useState(false);
+  const { user: loggedUser } = useContext(UserContext);
   const [editando, setEditando] = useState(false);
 
   if (!post) return null;
@@ -82,35 +82,35 @@ const Post = ({post, tags }) => {
             </Col>
 
             {/* Botones de acción Editar y Eliminar */}
-            {user?(// Si hay usuario, muestra los botones de editar y eliminar            
-            <Col xs={12} md={3}>
-              <div className="d-flex flex-column flex-md-row gap-2 gap-md-1 justify-content-center justify-content-md-end">
-                <Button
-                  variant="outline-warning"
-                  size="sm"
-                  onClick={() => setEditando(true)}
-                  className="w-100 w-md-auto"
-                >
-                  <span className="d-none d-md-inline">Editar</span>
-                  <span className="d-md-none">
-                    <i className="bi bi-pencil me-2"></i>Editar
-                  </span>
-                </Button>
-                <Button
-                  variant="outline-danger"
-                  size="sm"
-                  className="w-100 w-md-auto"
-                  onClick={eliminarPost}
-                >
-                  <span className="d-none d-md-inline">Eliminar</span>
-                  <span className="d-md-none">
-                    <i className="bi bi-trash me-2"></i>Eliminar
-                  </span>
-                </Button>
-              </div>
-            </Col>
+            {user ? (// Si hay usuario, muestra los botones de editar y eliminar            
+              <Col xs={12} md={3}>
+                <div className="d-flex flex-column flex-md-row gap-2 gap-md-1 justify-content-center justify-content-md-end">
+                  <Button
+                    variant="outline-warning"
+                    size="sm"
+                    onClick={() => setEditando(true)}
+                    className="w-100 w-md-auto"
+                  >
+                    <span className="d-none d-md-inline">Editar</span>
+                    <span className="d-md-none">
+                      <i className="bi bi-pencil me-2"></i>Editar
+                    </span>
+                  </Button>
+                  <Button
+                    variant="outline-danger"
+                    size="sm"
+                    className="w-100 w-md-auto"
+                    onClick={eliminarPost}
+                  >
+                    <span className="d-none d-md-inline">Eliminar</span>
+                    <span className="d-md-none">
+                      <i className="bi bi-trash me-2"></i>Eliminar
+                    </span>
+                  </Button>
+                </div>
+              </Col>
             ) : <></>
-}
+            }
           </Row>
 
         </Card.Header>
@@ -184,6 +184,7 @@ const Post = ({post, tags }) => {
         onHide={handleCloseModal}
         post={post}
         user={user}
+        currentUser={loggedUser} // Asumiendo que el usuario actual es el mismo que el autor del post
       />
       {/* Fin del post normal */}
     </>
