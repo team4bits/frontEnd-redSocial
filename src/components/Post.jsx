@@ -1,12 +1,14 @@
-import { Card, Button, Carousel } from 'react-bootstrap';
+import { Card, Button, Carousel, Row, Col } from 'react-bootstrap';
 import { useState } from 'react';
 import CommentsModal from './CommentsModal';
+import FormEditarPost from './FormEditarPost';
 
-const Post = ({user, post, tags}) => {
+const Post = ({ user, post, tags }) => {
   const [showModal, setShowModal] = useState(false);
-  
+  const [editando, setEditando] = useState(false);
+
   if (!post) return null;
-  
+
   // Validaciones para imágenes
   const imagenes = post.imagenes || [];
   const tieneImagenes = imagenes && imagenes.length > 0;
@@ -15,25 +17,97 @@ const Post = ({user, post, tags}) => {
   const handleShowModal = () => setShowModal(true);
   const handleCloseModal = () => setShowModal(false);
 
-  return (
+  return (editando ? (
+    <FormEditarPost
+      post={post}
+      user={user}
+      onCancel={() => setEditando(false)}
+      onSuccess={() => {
+        setEditando(false);
+        window.dispatchEvent(new Event("nuevo-post-creado"));
+      }}
+    />
+  ) : (
     <>
       <Card className="w-100 w-md-75 w-lg-50 mx-auto my-5 bg-dark text-light" style={{ minHeight: '20rem', maxWidth: '60vw' }}>
-        <Card.Header className='d-flex justify-content-between align-items-center text-light gap-2'>
-          <div>
-            <Card.Title className="text-light mb-1">@{user?.nickName || 'Usuario'}</Card.Title>
-            <Card.Subtitle className="text-secondary">{post.fecha}</Card.Subtitle>
-          </div>
-          <div className='d-flex gap-1 flex-wrap justify-content-center'>
-            {tags && tags.length > 0 && tags.map((tag, index) => (
-              <Button key={index} variant="success" size="sm">
-                {tag.nameTag}
-              </Button>
-            ))}
-          </div>
-          <div className='d-flex gap-2'>
-            <Button variant="outline-warning" size="sm">Editar</Button>
-            <Button variant="outline-danger" size="sm">Eliminar</Button>
-          </div>
+        {/* ✅ Card.Header RESPONSIVE */}
+        <Card.Header className='text-light p-3'>
+          <Row className="align-items-start g-2">
+            {/* Información del usuario */}
+            <Col xs={12} sm={6} md={4} lg={3}>
+              <div>
+                <Card.Title className="text-light mb-1 fs-6 fs-sm-5">
+                  @{user?.nickName || 'Usuario'}
+                </Card.Title>
+                <Card.Subtitle className="text-secondary small">
+                  {post.fecha}
+                </Card.Subtitle>
+              </div>
+            </Col>
+            
+            {/* Tags - Se ocultan en mobile muy pequeño */}
+            <Col xs={12} sm={6} md={5} lg={6}>
+              <div className='d-flex gap-1 flex-wrap justify-content-start justify-content-sm-center'>
+                {tags && tags.length > 0 && tags.map((tag, index) => (
+                  <Button 
+                    key={index} 
+                    variant="success" 
+                    size="sm"
+                    className="px-2 py-1"
+                    style={{ fontSize: '0.75rem' }}
+                  >
+                    <span className="d-none d-sm-inline">{tag.nameTag}</span>
+                    <span className="d-sm-none">#{tag.nameTag.substring(0, 6)}</span>
+                  </Button>
+                ))}
+              </div>
+            </Col>
+            
+            {/* Botones de acción - MODIFICADO PARA VERTICAL EN MOBILE */}
+            <Col xs={12} md={3}>
+              <div className='d-flex flex-column flex-md-row gap-2 gap-md-1 justify-content-center justify-content-md-end'>
+                <Button 
+                  variant="outline-warning" 
+                  size="sm" 
+                  onClick={() => setEditando(true)}
+                  className="w-100 w-md-auto"
+                >
+                  <span className="d-none d-md-inline">Editar</span>
+                  <span className="d-md-none">
+                    <i className="bi bi-pencil me-2"></i>Editar
+                  </span>
+                </Button>
+                <Button
+                  variant="outline-danger"
+                  size="sm"
+                  className="w-100 w-md-auto"
+                  onClick={async () => {
+                    const confirmar = window.confirm("¿Estás seguro de que querés eliminar este post?");
+                    if (!confirmar) return;
+
+                    try {
+                      const res = await fetch(`http://localhost:3001/posts/${post._id}`, {
+                        method: "DELETE",
+                      });
+
+                      if (!res.ok) throw new Error("Error al eliminar el post");
+
+                      alert("Post eliminado correctamente.");
+                      window.dispatchEvent(new Event("nuevo-post-creado"));
+                    } catch (err) {
+                      console.error("Error al eliminar:", err);
+                      alert("Hubo un error al eliminar el post.");
+                    }
+                  }}
+                >
+                  <span className="d-none d-md-inline">Eliminar</span>
+                  <span className="d-md-none">
+                    <i className="bi bi-trash me-2"></i>Eliminar
+                  </span>
+                </Button>
+              </div>
+            </Col>
+          </Row>
         </Card.Header>
 
         {/* Sección de imágenes */}
@@ -45,7 +119,7 @@ const Post = ({user, post, tags}) => {
                   if (!imageObj || !imageObj.imagen) {
                     return null;
                   }
-                  
+
                   return (
                     <Carousel.Item key={imageObj._id || index}>
                       <img
@@ -88,8 +162,8 @@ const Post = ({user, post, tags}) => {
         </Card.Body>
 
         <Card.Footer className='d-flex justify-content-center align-items-center gap-2 text-light p-3'>
-          <Button 
-            variant="outline-primary" 
+          <Button
+            variant="outline-primary"
             onClick={handleShowModal}
           >
             Ver Comentarios ({post.comments?.length || 0})
@@ -98,14 +172,14 @@ const Post = ({user, post, tags}) => {
       </Card>
 
       {/* Modal de comentarios */}
-      <CommentsModal 
+      <CommentsModal
         show={showModal}
         onHide={handleCloseModal}
         post={post}
         user={user}
       />
     </>
-  )
-}
+  ));
+};
 
 export default Post;
