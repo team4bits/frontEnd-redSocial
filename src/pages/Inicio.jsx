@@ -5,6 +5,7 @@ import { UserContext } from '../context/UserContext';
 import { getFunctions } from '../components/functions';
 import { Container } from 'react-bootstrap';
 import HomeContent from '../components/home/HomeContent';
+import FormTag from '../components/FormTag';
 
 function Inicio() {
   const [userComplete, setUserComplete] = useState(null);
@@ -31,6 +32,7 @@ function Inicio() {
       <div className="w-100 w-md-75 w-lg-50 mx-auto">
         {userComplete && <FormPost user={userComplete} />}
         <HomeContent />
+        <FormTag user={userComplete} />
       </div>
     </Container>
   )
