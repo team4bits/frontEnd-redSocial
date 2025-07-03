@@ -1,4 +1,3 @@
-import Post from '../components/Post';
 import FormPost from '../components/FormPost';
 import { useState, useEffect, useContext } from 'react';
 import { UserContext } from '../context/UserContext';

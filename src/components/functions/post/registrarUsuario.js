@@ -1,6 +1,4 @@
-const URL_API = import.meta.env.VITE_API_URL || 'http://localhost';
-const URL_API_PORT = import.meta.env.VITE_API_PORT || '3001';
-
+import { API_URL, apiEndpoints } from '../../../config/api'
 import {validarMail, validarNickName} from '../validators';
 const registrarUsuario = async (bodyUsuario) => {
     //Función para registrar un usuario
@@ -16,7 +14,7 @@ const registrarUsuario = async (bodyUsuario) => {
     if(await validarMail(bodyUsuario.email) &&  validarNickName(bodyUsuario.nickName)) {
         console.log("Usuario válido, procediendo a registrar...");
         try {
-        let respuesta = await fetch (`${URL_API}:${URL_API_PORT}/users`, {
+        let respuesta = await fetch (`${API_URL}${apiEndpoints.users}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"},
