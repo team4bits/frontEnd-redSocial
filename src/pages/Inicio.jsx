@@ -33,7 +33,7 @@ function Inicio() {
           <FormPost user={userComplete} />
         )}
         <HomeContent />
-        <FormTag user={userComplete} />
+        <FormTag />
       </div>
     </Container>
   );
