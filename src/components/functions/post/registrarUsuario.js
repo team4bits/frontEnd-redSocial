@@ -10,7 +10,7 @@ const registrarUsuario = async (bodyUsuario) => {
     //   "nickName": "string", Un string de al menos 2 caracteres
     //   "email": "string" Un email valido
     console.log(`El email es valido = ${ await validarMail(bodyUsuario.email)}`);
-    console.log(`El nickName es valido = ${ validarNickName(bodyUsuario.nickName)}`);
+    console.log(`El nickName es valido = ${ await validarNickName(bodyUsuario.nickName)}`);
     if(await validarMail(bodyUsuario.email) &&  validarNickName(bodyUsuario.nickName)) {
         console.log("Usuario válido, procediendo a registrar...");
         try {

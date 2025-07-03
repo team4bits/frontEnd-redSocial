@@ -17,7 +17,11 @@ const NickNameInput = ({ nickname, setNickname, isInvalid, errorMessage , isVali
           type="text"
           value={nickname}
           placeholder="Ingresa un nickname"
-          onChange={(e) => setNickname(e.target.value)}
+          onChange={(e) => {
+            setNickname(e.target.value);
+            console.log("El nickname es: " + e.target.value);
+            console.log("El error es: " + (isInvalid ? errorMessage : "No hay error"));
+          }}
           isInvalid={isInvalid}
           isValid={isValid}
           required

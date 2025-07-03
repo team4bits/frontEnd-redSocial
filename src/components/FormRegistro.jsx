@@ -22,11 +22,12 @@ function FormularioDeRegistro() {
   const [emailInvalido, setEmailInvalido] = useState(true);
   const [aceptoTerminos, setAceptoTerminos] = useState(false);
   const navigate = useNavigate();
+  const usuariosNick = usuarios.map((usuario) => usuario.nickName); // Extrae los nicknames de los usuarios registrados
   const emails = usuarios.map((usuario) => usuario.email); // Extrae los emails de los usuarios registrados
 
   //Validaciones para nickname
   const existeElNickname = () => {
-    if (usuarios.includes(nickname)) {
+    if (usuariosNick.includes(nickname)) {
       return "El nickname ya existe";
     }
   };
@@ -65,6 +66,7 @@ function FormularioDeRegistro() {
       alert("Debes aceptar los términos y condiciones");
       return;
     }
+    
     if (!nickInvalido && !emailInvalido) {
       //Registrar al usuario
       const respuesta = await postFunctions.registrarUsuario({

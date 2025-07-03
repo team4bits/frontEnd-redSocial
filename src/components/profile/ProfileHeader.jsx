@@ -1,4 +1,10 @@
-const ProfileHeader = ({ user }) => {
+import {useContext} from 'react';
+import {UserContext} from '../../context/UserContext';
+
+
+const ProfileHeader = () => {
+  const {user} = useContext(UserContext);
+
   return (
     <div className="w-100 w-md-75 w-lg-50 mx-auto mb-4 bg-dark text-light p-4 rounded text-center" style={{ minHeight: '10rem', maxWidth: '60vw' }}>
       <h2 className="fs-2">{user.nickName}</h2>

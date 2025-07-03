@@ -1,11 +1,13 @@
-import { Alert, Form } from 'react-bootstrap';
+import { Alert } from 'react-bootstrap';
 import Post from '../Post';
 import Comment from '../Comment';
 import FormPost from '../FormPost';
 import { getFunctions } from '../functions';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
+import { UserContext } from '../../context/UserContext';
 
-const ProfileContent = ({ activeTab, user }) => {
+const ProfileContent = ({ activeTab }) => {
+  const {user} = useContext(UserContext);
   const [posts, setPosts] = useState([]);
   const [comments, setComments] = useState([]);
   
