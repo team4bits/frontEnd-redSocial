@@ -59,7 +59,7 @@ const FormEditarPost = ({ post, onCancel, onSuccess }) => {
 
             alert("¡Post actualizado exitosamente!");
             
-            // ✅ EVENTOS PARA ACTUALIZAR TODAS LAS VISTAS
+            // EVENTOS PARA ACTUALIZAR TODAS LAS VISTAS
             window.dispatchEvent(new Event("nuevo-post-creado"));
             window.dispatchEvent(new Event("post-actualizado"));
             window.dispatchEvent(new Event("perfil-actualizado"));
