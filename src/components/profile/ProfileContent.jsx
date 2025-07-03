@@ -60,7 +60,11 @@ const ProfileContent = ({ activeTab }) => {
     };
 
     window.addEventListener("recargar-profile-content", handleReload);
-    return () => window.removeEventListener("recargar-profile-content", handleReload);
+    window.addEventListener("nuevo-post-eliminado", handleReload);
+    return () => {
+      window.removeEventListener("recargar-profile-content", handleReload)
+      window.removeEventListener("nuevo-post-eliminado", handleReload);
+    };
   }, [user._id]);
 
   if (!user) return <div>Cargando...</div>;
