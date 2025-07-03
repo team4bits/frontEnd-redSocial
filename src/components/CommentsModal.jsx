@@ -4,7 +4,7 @@ import FormComment from './FormComment';
 import { getFunctions } from './functions';
 import { useEffect, useState } from 'react';
 
-const CommentsModal = ({ show, onHide, post, user }) => {
+const CommentsModal = ({ show, onHide, post, user, currentUser }) => {
   const [commentsWithUsers, setCommentsWithUsers] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -13,33 +13,25 @@ const CommentsModal = ({ show, onHide, post, user }) => {
       if (post?.comments && post.comments.length > 0) {
         try {
           setLoading(true);
-          
-          // Cargar usuarios para cada comentario
+
           const commentsWithUserData = await Promise.all(
             post.comments.map(async (comment) => {
               let userId;
-              
-              // Detectar el formato del userId
+
               if (typeof comment.userId === 'string') {
-                // Caso Inicio: userId es un string
                 userId = comment.userId;
               } else if (comment.userId && comment.userId._id) {
-                // Caso Perfil: userId es un objeto con _id
                 userId = comment.userId._id;
               } else {
                 console.error("Formato de userId no reconocido:", comment.userId);
-                return comment; // Retornar sin modificar si no se puede procesar
+                return comment;
               }
-              
+
               const userData = await getFunctions.getUserByObjectId(userId);
-              
-              return {
-                ...comment,
-                user: userData // ← Reemplazar userId por user con datos completos
-              };
+              return { ...comment, user: userData };
             })
           );
-          
+
           setCommentsWithUsers(commentsWithUserData);
           setLoading(false);
         } catch (error) {
@@ -53,15 +45,39 @@ const CommentsModal = ({ show, onHide, post, user }) => {
     };
 
     fetchUsersForComments();
-  }, [post?.comments]);
+
+    const handler = async () => {
+      console.log("🔔 Nuevo comentario detectado");
+
+      // Disparar evento para recargar post
+      window.dispatchEvent(new CustomEvent("recargar-post", {
+        detail: { postId: post._id }
+      }));
+
+      // Detectar si estamos en Perfil o Inicio
+      const isProfile = window.location.pathname.includes('/perfil');
+
+      if (isProfile) {
+        // En Perfil: dar más tiempo y solo cerrar modal
+        setTimeout(() => {
+          onHide(); // Cerrar modal
+          window.location.reload(); // Recargar después
+        }, 1500);
+      } else {
+        // En Inicio: recargar inmediatamente
+        setTimeout(() => {
+          window.location.reload();
+        }, 500);
+      }
+    };
+
+    // AGREGAR ESTAS LÍNEAS QUE FALTABAN:
+    window.addEventListener("nuevo-comentario-creado", handler);
+    return () => window.removeEventListener("nuevo-comentario-creado", handler);
+  }, []); // ← Cerrar el useEffect aquí
 
   return (
-    <Modal
-      show={show}
-      onHide={onHide}
-      size="lg"
-      backdrop="static"
-    >
+    <Modal show={show} onHide={onHide} size="lg" backdrop="static">
       <Modal.Header closeButton className="bg-dark text-light">
         <Modal.Title>
           Comentarios del post de @{user?.nickName || 'Usuario'}
@@ -69,22 +85,21 @@ const CommentsModal = ({ show, onHide, post, user }) => {
       </Modal.Header>
 
       <Modal.Body className="bg-dark text-light" style={{ maxHeight: '60vh', overflowY: 'auto' }}>
-        {/* Lista de comentarios existentes */}
         <div className="mb-4">
           <h6 className="text-light mb-3">
             Comentarios ({commentsWithUsers?.length || 0}):
           </h6>
-          
+
           {loading ? (
             <div className="text-center p-4">
               <p>Cargando comentarios...</p>
             </div>
-          ) : commentsWithUsers && commentsWithUsers.length > 0 ? (
+          ) : commentsWithUsers.length > 0 ? (
             commentsWithUsers.map((comment) => (
               <Comment
                 key={comment._id}
                 comment={comment}
-                user={comment.user} // ← Ahora user tiene todos los datos
+                user={comment.user}
               />
             ))
           ) : (
@@ -95,10 +110,9 @@ const CommentsModal = ({ show, onHide, post, user }) => {
           )}
         </div>
 
-        {/* Formulario para agregar comentario - abajo de los comentarios */}
         <div className="mt-3 p-3 border border-secondary rounded">
           <h6 className="text-light mb-3">Agregar un comentario:</h6>
-          <FormComment post={post} user={user} />
+          <FormComment post={post} user={currentUser} />
         </div>
       </Modal.Body>
 
@@ -109,6 +123,6 @@ const CommentsModal = ({ show, onHide, post, user }) => {
       </Modal.Footer>
     </Modal>
   );
-};
+}; // ← QUITAR EL } DE MÁS QUE TENÍAS AQUÍ
 
 export default CommentsModal;

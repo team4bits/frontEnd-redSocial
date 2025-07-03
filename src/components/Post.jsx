@@ -1,10 +1,12 @@
 import { Card, Button, Carousel } from 'react-bootstrap';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import CommentsModal from './CommentsModal';
+import { UserContext } from '../context/UserContext';
 
 const Post = ({user, post, tags}) => {
   const [showModal, setShowModal] = useState(false);
-  
+   const { user: loggedUser } = useContext(UserContext);
+
   if (!post) return null;
   
   // Validaciones para imágenes
@@ -103,6 +105,7 @@ const Post = ({user, post, tags}) => {
         onHide={handleCloseModal}
         post={post}
         user={user}
+        currentUser={loggedUser} // Asumiendo que el usuario actual es el mismo que el autor del post
       />
     </>
   )
