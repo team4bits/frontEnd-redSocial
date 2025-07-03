@@ -1,4 +1,4 @@
-import { getUsersNickNames, getUsersEmails, getAUser, getPostsFromUser, getCommentsFromUser, getAllPosts } from './get'
+import { getUsersNickNames, getUsersEmails, getAUser, getPostsFromUser, getCommentsFromUser, getAllPosts, getAllTags } from './get'
 import { getUserByObjectId } from './get'
 import { getAllUsers } from './get/getAllUsers'
 import {registrarUsuario} from './post'
@@ -13,7 +13,8 @@ const getFunctions = {
     getCommentsFromUser,
     getAllUsers,
     getUserByObjectId,
-    getAllPosts
+    getAllPosts,
+    getAllTags
 }
 const postFunctions = {
     registrarUsuario

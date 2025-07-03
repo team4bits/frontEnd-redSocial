@@ -1,11 +1,13 @@
 import { Card, Button, Form } from 'react-bootstrap';
 import { useState, useEffect } from 'react';
+import FormTag from './FormTag';
 
 const FormPost = ({ user, onPostCreado }) => {
     const [content, setContent] = useState("");
     const [imagenes, setImagenes] = useState([]);
-    const [tags, setTags] = useState([]); // si lo usás más adelante
+    const [tags, setTags] = useState([]);
     const [currentTime, setCurrentTime] = useState(new Date());
+    const [showTagModal, setShowTagModal] = useState(false);
 
     useEffect(() => {
         const timer = setInterval(() => setCurrentTime(new Date()), 60000);
@@ -15,6 +17,14 @@ const FormPost = ({ user, onPostCreado }) => {
     const handleImageChange = (e) => {
         const files = Array.from(e.target.files);
         setImagenes(files);
+    };
+
+    const agregarTag = () => {
+        setShowTagModal(true);
+    };
+
+    const cerrarTagModal = () => {
+        setShowTagModal(false);
     };
 
     const handleSubmit = async (e) => {
@@ -82,7 +92,7 @@ const FormPost = ({ user, onPostCreado }) => {
         }
     };
 
-    return (
+    return (<>
         <Form onSubmit={handleSubmit}>
             <Card className="w-100 w-md-75 w-lg-50 mx-auto my-5 bg-dark text-light" style={{ minHeight: '10rem', maxWidth: '60vw' }}>
                 <Card.Header className='d-flex justify-content-between align-items-center text-light gap-2'>
@@ -95,7 +105,7 @@ const FormPost = ({ user, onPostCreado }) => {
                             })}
                         </Card.Subtitle>
                     </div>
-                    <Button variant="outline-success" size="sm">
+                    <Button variant="outline-success" size="sm" onClick={agregarTag}>
                         Agregar Tag
                     </Button>
                 </Card.Header>
@@ -126,6 +136,13 @@ const FormPost = ({ user, onPostCreado }) => {
                 </Card.Footer>
             </Card>
         </Form>
+
+        {/* Modal de Tags */}
+        <FormTag
+            show={showTagModal}
+            onHide={cerrarTagModal}
+        />
+    </>
     );
 };
 

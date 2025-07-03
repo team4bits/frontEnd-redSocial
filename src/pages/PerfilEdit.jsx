@@ -34,8 +34,8 @@ export default function PerfilEdit() {
     !isvalidEmailControl ||
     nickName === "" ||
     email === "" ||
-    nickNameIgual ||
-    emailIgual;
+    (nickNameIgual &&
+    emailIgual);
   const modificarUsuario = async (e) => {
     e.preventDefault();
     const isEmailValid =
