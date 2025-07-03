@@ -1,4 +1,4 @@
-import { Card, Button, Form } from 'react-bootstrap';
+import { Card, Button, Form, Row, Col} from 'react-bootstrap';
 import { useState, useEffect } from 'react';
 import FormTag from './FormTag';
 
