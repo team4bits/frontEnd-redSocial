@@ -4,10 +4,8 @@ import { useState, useContext } from "react";
 import FormEditarComment from "./FormEditarComment";
 import { UserContext } from "../context/UserContext";
 
-const Comment = ({ comment }) => {
-
-
-    const { user } = useContext(UserContext);
+const Comment = ({ comment, user: commentUser }) => {
+    const { user: loggedUser } = useContext(UserContext);
 
     const [editando, setEditando] = useState(false);
 
@@ -19,7 +17,7 @@ const Comment = ({ comment }) => {
 
         <FormEditarComment
             comment={comment}
-            user={user}
+            user={loggedUser}
             onCancel={() => setEditando(false)}
             onSuccess={() => {
                 setEditando(false);
@@ -31,7 +29,7 @@ const Comment = ({ comment }) => {
         <Card className="w-100 w-md-75 w-lg-50 mx-auto my-5 bg-light text-dark border-dark" style={{ minHeight: '10rem', maxWidth: '60vw' }}>
             <Card.Header className='d-flex justify-content-between align-items-center text-light gap-2'>
                 <div>
-                    <Card.Title className="mb-1 text-dark">@{user.nickName}</Card.Title>
+                    <Card.Title className="mb-1 text-dark">@{commentUser?.nickName}</Card.Title>
                     <Card.Subtitle className="text-muted">{comment.fecha} </Card.Subtitle>
                 </div>
                 <div className='d-flex gap-2'>
