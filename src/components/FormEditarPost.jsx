@@ -2,6 +2,8 @@ import { useState, useContext } from 'react';
 import { Card, Button, Form } from 'react-bootstrap';
 import { API_URL, apiEndpoints } from '../config/api';
 import { UserContext } from '../context/UserContext';
+import FormTag from './FormTag'; 
+
 const FormEditarPost = ({ post, onCancel, onSuccess }) => {
     const { user } = useContext(UserContext);
     const [content, setContent] = useState(post.content);
