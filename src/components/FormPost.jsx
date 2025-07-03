@@ -1,5 +1,6 @@
 import { Card, Button, Form } from 'react-bootstrap';
 import { useState, useEffect } from 'react';
+import { API_URL, apiEndpoints } from '../config/api';
 import FormTag from './FormTag';
 
 const FormPost = ({ user, onPostCreado }) => {
@@ -50,7 +51,7 @@ const FormPost = ({ user, onPostCreado }) => {
                 // No enviar 'tags' al crear el post
             };
             console.log("Payload del post:", nuevoPost);
-            const responsePost = await fetch("http://localhost:3001/posts", {
+            const responsePost = await fetch(`${API_URL}${apiEndpoints.posts}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -70,7 +71,7 @@ const FormPost = ({ user, onPostCreado }) => {
                     formData.append("imagenes", img); // campo correcto: 'imagenes'
                 });
 
-                const responseArchivos = await fetch("http://localhost:3001/archives", {
+                const responseArchivos = await fetch(`${API_URL}${apiEndpoints.archives}`, {
                     method: "POST",
                     body: formData
                 });

@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Card, Button, Carousel } from 'react-bootstrap';
 import FormEditarPost from './FormEditarPost';
+import { API_URL, apiEndpoints } from '../config/api'
 
 const Post = ({ user, post, tags }) => {
   if (!post) return null;
@@ -45,7 +46,7 @@ const Post = ({ user, post, tags }) => {
               if (!confirmar) return;
 
               try {
-                const res = await fetch(`http://localhost:3001/posts/${post._id}`, {
+                const res = await fetch(`${API_URL}${apiEndpoints.posts}/${post._id}`, {
                   method: "DELETE",
                 });
 
@@ -74,7 +75,7 @@ const Post = ({ user, post, tags }) => {
                   <Carousel.Item key={imageObj._id || index}>
                     <img
                       className="d-block w-100 rounded"
-                      src={`http://localhost:3001${imageObj.imagen}`}
+                      src={`${API_URL}${imageObj.imagen}`}
                       alt={`Imagen ${index + 1}`}
                       style={{ height: '35rem', objectFit: 'contain' }}
                     />
@@ -86,7 +87,7 @@ const Post = ({ user, post, tags }) => {
             imagenes[0]?.imagen ? (
               <img
                 className="d-block w-100 rounded"
-                src={`http://localhost:3001${imagenes[0].imagen}`}
+                src={`${API_URL}${imagenes[0].imagen}`}
                 alt="Imagen del post"
                 style={{ height: '35rem', objectFit: 'contain' }}
                 onError={(e) => {
