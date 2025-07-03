@@ -7,10 +7,10 @@ import { useEffect, useState, useContext } from 'react';
 import { UserContext } from '../../context/UserContext';
 
 const ProfileContent = ({ activeTab }) => {
-  const {user} = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const [posts, setPosts] = useState([]);
   const [comments, setComments] = useState([]);
-  
+
   useEffect(() => {
     const fetchPosts = async () => {
       try {
@@ -32,6 +32,35 @@ const ProfileContent = ({ activeTab }) => {
 
     fetchPosts();
     fetchComments();
+  }, [user._id]);
+
+  useEffect(() => {
+    const handleReload = () => {
+      console.log("🔄 Recargando datos del perfil...");
+      const fetchPosts = async () => {
+        try {
+          const userPosts = await getFunctions.getPostsFromUser(user._id);
+          setPosts(userPosts);
+        } catch (error) {
+          console.error("Error fetching posts:", error);
+        }
+      };
+
+      const fetchComments = async () => {
+        try {
+          const userComments = await getFunctions.getCommentsFromUser(user._id);
+          setComments(userComments);
+        } catch (error) {
+          console.error("Error fetching comments:", error);
+        }
+      };
+
+      fetchPosts();
+      fetchComments();
+    };
+
+    window.addEventListener("recargar-profile-content", handleReload);
+    return () => window.removeEventListener("recargar-profile-content", handleReload);
   }, [user._id]);
 
   if (!user) return <div>Cargando...</div>;
