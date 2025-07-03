@@ -1,14 +1,30 @@
 # Frontend - Red Social
 
-Una aplicación web de red social desarrollada con React y Vite.
+Una aplicación web de red social desarrollada con React y Vite como proyecto académico para la materia **Estrategia de Persistencia** de la Universidad Nacional de Hurlingham (UNAHUR).
+
+## Contexto Académico
+
+- **Universidad**: Universidad Nacional de Hurlingham (UNAHUR)
+- **Materia**: Estrategia de Persistencia
+- **Año**: 2025
+- **Proyecto**: Sistema completo de red social con frontend y backend
+
+## Integrantes
+
+- Gonzalvez Chala, Victor.
+- Ledezma, Gabriel.
+- Santana, Lucas.
+- Viltez, Hernan.
 
 ## Características
 
-- Registro e inicio de sesión de usuarios
-- Crear, editar y eliminar posts
-- Sistema de comentarios
-- Perfiles de usuario
-- Interfaz responsiva con Bootstrap
+- **Autenticación completa**: Registro e inicio de sesión de usuarios
+- **Gestión de posts**: Crear, editar y eliminar publicaciones
+- **Sistema de comentarios**: Interacción entre usuarios
+- **Perfiles personalizados**: Visualización y edición de perfiles
+- **Sistema de etiquetas**: Categorización de contenido
+- **Interfaz responsiva**: Diseño adaptable con Bootstrap
+- **SPA (Single Page Application)**: Navegación fluida sin recargas
 
 ## Tecnologías
 
@@ -16,6 +32,15 @@ Una aplicación web de red social desarrollada con React y Vite.
 - Vite 6.3.5
 - React Router DOM
 - Bootstrap 5.3.7
+
+## Arquitectura del Proyecto
+
+Este frontend forma parte de una arquitectura completa que incluye:
+
+- **Frontend**: React con Vite (este repositorio)
+- **Backend**: API REST con Node.js y Express
+- **Base de datos**: MongoDB con Mongoose
+- **Contenedores**: Docker para el entorno de desarrollo
 
 ## Instalación
 
@@ -55,10 +80,19 @@ VITE_API_PORT=3001
 
 ## Estructura del proyecto
 
-- `src/components/` - Componentes reutilizables
-- `src/pages/` - Páginas principales de la aplicación
-- `src/context/` - Contextos de React para manejo de estado
-- `src/config/` - Configuración de la API
+```
+src/
+├── components/           # Componentes reutilizables
+│   ├── functions/       # Funciones de API (CRUD)
+│   ├── home/           # Componentes de página inicio
+│   ├── profile/        # Componentes de perfil
+│   └── FormLogin-components/ # Componentes de formularios
+├── pages/              # Páginas principales de la aplicación
+├── context/            # Contextos de React para manejo de estado
+├── config/             # Configuración de la API
+└── assets/             # Recursos estáticos (imágenes, etc.)
+```
+
 
 ## Nota
 
